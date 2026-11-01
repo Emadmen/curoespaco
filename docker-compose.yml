@@ -1,0 +1,23 @@
+# Local development database. Not intended for production use.
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: cora-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: cora
+      POSTGRES_PASSWORD: cora_dev_password
+      POSTGRES_DB: cora
+    ports:
+      - "5433:5432"
+    volumes:
+      - cora-db-data:/var/lib/postgresql/data
+      - ./docker/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cora -d cora"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  cora-db-data:

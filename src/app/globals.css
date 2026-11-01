@@ -1,26 +1,273 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "lenis/dist/lenis.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Cora design system. See docs/design-system.md.
+ * Flat colour bands, hairline rules and one typeface: no gradients, no
+ * shadows. Components use the semantic tokens; the raw scales below are only
+ * for picking a band or a tint.
+ */
+
+/* ─── Palette ─────────────────────────────────────────────────────────────── */
+@theme {
+  --color-sage-100: #e6ede9;
+  --color-sage-200: #d1ddd6;
+  --color-sage-300: #b2c1ba;
+  --color-sage-400: #93ab9e;
+  --color-sage-500: #6f8d7d;
+
+  --color-sand-100: #f4f0e9;
+  --color-sand-200: #e2dacd;
+  --color-sand-300: #cfc6b6;
+
+  --color-forest-500: #3a6f58;
+  --color-forest-700: #00401c;
+  --color-forest-800: #003316;
+  --color-forest-900: #00260f;
+
+  --color-warning-100: #f3e6c8;
+  --color-warning-800: #654607;
+  --color-danger-100: #f6dfda;
+  --color-danger-700: #9b2c1c;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-franklin), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+  --font-heading: var(--font-franklin), ui-sans-serif, system-ui, sans-serif;
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.6);
+  --radius-2xl: calc(var(--radius) * 2.4);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ─── Semantic tokens (shadcn/ui) ─────────────────────────────────────────── */
+:root {
+  --background: #ffffff;
+  --foreground: var(--color-forest-700);
+  --card: #ffffff;
+  --card-foreground: var(--color-forest-700);
+  --popover: #ffffff;
+  --popover-foreground: var(--color-forest-700);
+  --primary: var(--color-forest-700);
+  --primary-foreground: #ffffff;
+  --secondary: var(--color-sand-200);
+  --secondary-foreground: var(--color-forest-700);
+  --muted: var(--color-sand-100);
+  /* Dark enough to stay readable (4.5:1) on the sage band as well as on white. */
+  --muted-foreground: #1f4a36;
+  --accent: var(--color-sage-200);
+  --accent-foreground: var(--color-forest-700);
+  --destructive: var(--color-danger-700);
+  /* Translucent, so the same hairline works on white, sand and sage. */
+  --border: rgb(0 64 28 / 0.18);
+  --input: rgb(0 64 28 / 0.42);
+  --ring: var(--color-forest-700);
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply text-balance;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+  ::selection {
+    background: var(--color-sage-300);
+    color: var(--color-forest-900);
+  }
+  /* Offset in-page anchors below the sticky header. */
+  [id] {
+    scroll-margin-top: 6rem;
   }
 }
 
-body {
-  background: var(--background);
+/* Dark band: re-points the semantic tokens, so everything inside just works. */
+@utility tone-forest {
+  --background: var(--color-forest-700);
+  --foreground: #ffffff;
+  --card: var(--color-forest-800);
+  --card-foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-foreground: var(--color-forest-700);
+  --secondary: var(--color-forest-500);
+  --secondary-foreground: #ffffff;
+  --muted-foreground: var(--color-sage-200);
+  --border: rgb(255 255 255 / 0.2);
+  --input: rgb(255 255 255 / 0.5);
+  --ring: #ffffff;
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 120rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 40rem) {
+    padding-inline: 2rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: clamp(4rem, 5vw, 6rem);
+  }
+}
+
+/* The page grid: a narrow label column and a wide content column. */
+@utility grid-split {
+  display: grid;
+  gap: 2rem 3rem;
+  @media (width >= 64rem) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+  }
+  @media (width >= 80rem) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr);
+  }
+}
+
+/* Home hero: the logo on the left, the text block on the right. */
+@utility grid-hero {
+  display: grid;
+  gap: 2rem 3rem;
+  @media (width >= 64rem) {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  }
+}
+
+/* Two even-handed columns: a heading beside its content, so a section fits one screen. */
+@utility grid-side {
+  display: grid;
+  gap: 3.5rem;
+  @media (width >= 64rem) {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 6rem;
+  }
+}
+
+/*
+ * Type scale. These are not `text-*` utilities on purpose: the `cn` merger
+ * would read a custom `text-*` size as a colour and drop it.
+ */
+@utility type-display-xl {
+  font-size: clamp(2.375rem, 4vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+@utility type-display-lg {
+  font-size: clamp(2.125rem, 1.5rem + 2.6vw, 4rem);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+}
+
+@utility type-display-md {
+  font-size: clamp(1.75rem, 1.45rem + 1.4vw, 2.625rem);
+  line-height: 1.14;
+  letter-spacing: -0.025em;
+}
+
+@utility type-display-sm {
+  font-size: clamp(1.375rem, 1.25rem + 0.5vw, 1.75rem);
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+}
+
+/* Heroes start a quarter of the way down the screen, like the reference. */
+@utility hero-offset {
+  @media (width >= 64rem) {
+    padding-top: calc(26svh - 5rem);
+  }
+}
+
+@utility eyebrow {
+  display: block;
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  font-weight: 600;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Small uppercase label for table-like data (summaries, column headings). */
+@utility label-caps {
+  font-size: 0.75rem;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+@utility surface {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--card);
+}
+
+@utility surface-tint {
+  border-radius: var(--radius-xl);
+  background: var(--color-sand-100);
+}
+
+/*
+ * Starting state for GSAP entrances, set here so nothing flashes before
+ * hydration. Without JavaScript or with reduced motion the page stays as it is.
+ * Opacity, not visibility: hidden elements can't be scrolled to or clicked.
+ */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-reveal],
+  [data-reveal-item],
+  [data-split] {
+    opacity: 0;
+  }
+  [data-reveal-line] {
+    transform: scaleX(0);
+  }
+  [data-contour] {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+}
+
+/* Room for descenders: SplitText's line masks would otherwise clip "ç" and "p". */
+.split-line-mask {
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
+}
+
+@utility text-pretty-p {
+  text-wrap: pretty;
 }

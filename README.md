@@ -18,7 +18,7 @@ All clinic information in this repository (name, address, team, services) is **p
 - **WhatsApp:** official `wa.me` links built by `src/lib/whatsapp.ts`, with prefilled messages (general, per service, per professional, and the full booking preferences). They contain no health information.
   - Floating button on desktop and a sticky "Marcar / WhatsApp" bar on mobile.
   - They work even when the database or booking API is down: public pages fall back to the static config.
-- **Booking modes:** `REQUEST` (default; visitor states a preference) or `LIVE` (real slots from each professional's working hours). In LIVE mode, slots are re-checked on the server inside a transaction with per-professional advisory locks, so the same slot can't be booked twice.
+- **Booking modes:** `REQUEST` (default; visitor states a preference) or `LIVE` (real slots from each professional's working hours). In LIVE mode, slots are re-checked on the server inside a transaction that locks the professional's row (`SELECT … FOR UPDATE`), so the same slot can't be booked twice.
 - **Admin (`/admin`):**
   - Requests: filter, search, confirm/reject/cancel, delete (erasure), CSV export, retention purge.
   - Services and professionals: CRUD, enable/disable, photo upload, working hours.
@@ -27,16 +27,16 @@ All clinic information in this repository (name, address, team, services) is **p
 
 ## Tech stack
 
-Next.js 16 (App Router, Cache Components, `proxy.ts`) · React 19 · TypeScript · Tailwind CSS 4 · shadcn/ui (Base UI) · Lucide · Motion · React Hook Form + Zod · date-fns · PostgreSQL + Prisma 7 · Vitest · Playwright.
+Next.js 16 (App Router, Cache Components, `proxy.ts`) · React 19 · TypeScript · Tailwind CSS 4 · shadcn/ui (Base UI) · Lucide · Motion · React Hook Form + Zod · date-fns · MySQL/MariaDB + Prisma 7 · Vitest · Playwright.
 
 ## Getting started
 
-Requirements: Node.js 20.9+ (tested with 22), Docker (for local PostgreSQL).
+Requirements: Node.js 20.9+ (tested with 22), Docker (for local MariaDB).
 
 ```bash
 npm install                 # also generates the Prisma client
 cp .env.example .env        # then edit ADMIN_EMAIL / ADMIN_PASSWORD
-docker compose up -d        # PostgreSQL on localhost:5433 (+ test databases)
+docker compose up -d        # MariaDB on localhost:3307 (+ test databases)
 npx prisma migrate deploy   # create tables
 npm run db:seed             # sample content + admin account
 npm run dev                 # http://localhost:3000
@@ -63,7 +63,7 @@ See [`.env.example`](.env.example).
 
 | Variable | Required | Description |
 | --- | --- | --- |
-| `DATABASE_URL` | yes | PostgreSQL connection string |
+| `DATABASE_URL` | yes | MySQL/MariaDB connection string, e.g. `mysql://user:password@host:3306/database` |
 | `NEXT_PUBLIC_SITE_URL` | yes (prod) | Canonical URL, used for metadata, sitemap and JSON-LD |
 | `ADMIN_EMAIL`, `ADMIN_PASSWORD` | for seeding | Bootstrap admin account (password ≥ 12 chars) |
 | `BOOKING_RATE_LIMIT`, `BOOKING_RATE_WINDOW_SECONDS` | no | Per-IP limit for booking requests (default 5 per 10 min) |
@@ -123,9 +123,9 @@ The e2e tests cover: a complete booking request, a preselected therapist being k
 
 ## Deployment
 
-The app is a standard Next.js server with PostgreSQL. It runs on Vercel, Render, Railway, Fly.io, a VPS (Docker or `npm start`), etc.
+The app is a standard Next.js server with MySQL or MariaDB. It runs on Hostinger (Web App / Node.js), Render, Railway, a VPS (Docker or `npm start`), etc.
 
-1. Provision PostgreSQL (e.g. Neon, Supabase, RDS) **in the EU** and set `DATABASE_URL`.
+1. Provision a MySQL 8+ or MariaDB 10.6+ database **in the EU** (on Hostinger: hPanel → Databases → MySQL) and set `DATABASE_URL`. URL-encode special characters in the password.
 2. Set `NEXT_PUBLIC_SITE_URL` to the public HTTPS URL.
 3. Build: `npm ci && npx prisma migrate deploy && npm run build`.
 4. Once only: `ADMIN_EMAIL=… ADMIN_PASSWORD=… npm run db:seed` to create the admin and initial content.

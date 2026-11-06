@@ -18,9 +18,9 @@ export default async function AboutPage() {
   return (
     <>
       <PageHero eyebrow={t.about.eyebrow} title={t.about.title} intro={clinic.aboutIntro}>
-        <div className="flex flex-wrap items-center gap-x-10 gap-y-6">
-          <BookLink cta />
-          <WhatsAppLink cta number={clinic.whatsapp} message={whatsappMessages.general()} label={t.cta.whatsappLong} />
+        <div className="flex flex-wrap items-center gap-3">
+          <BookLink size="xl" />
+          <WhatsAppLink variant="secondary" size="xl" number={clinic.whatsapp} message={whatsappMessages.general()} label={t.cta.whatsappLong} />
         </div>
       </PageHero>
       <PillarsSection />

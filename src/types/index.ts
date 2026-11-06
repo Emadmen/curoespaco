@@ -87,5 +87,7 @@ export interface Testimonial {
   quote: string;
   /** Initials or a pseudonym — never a full name without explicit consent. */
   author: string;
+  /** A photograph shown beside the quote, only with that person's consent. */
+  photo?: string;
   consentConfirmed: true;
 }

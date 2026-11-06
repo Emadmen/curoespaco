@@ -252,11 +252,13 @@ async function createLive(
   const candidates = await liveCandidates(db, service.id, professional?.id ?? null);
   if (!candidates.length) return { ok: false, code: "SLOT_UNAVAILABLE" };
 
-  return db.$transaction(async (tx) => {
-    // Lock candidates in a stable order so concurrent requests serialise per professional.
-    for (const c of [...candidates].sort((a, b) => a.id.localeCompare(b.id))) {
-      await tx.$queryRaw`SELECT 1 AS locked FROM pg_advisory_xact_lock(hashtext(${c.id}))`;
-    }
+  return db.$transaction(
+    async (tx) => {
+    // Lock the candidates' rows (in a stable order) until commit, so concurrent requests
+    // for the same professional serialise. READ COMMITTED lets the slot check below see
+    // a booking that a request holding the lock before us has just committed.
+    const ids = candidates.map((c) => c.id).sort();
+    await tx.$queryRaw`SELECT id FROM Professional WHERE id IN (${Prisma.join(ids)}) ORDER BY id FOR UPDATE`;
     for (const candidate of candidates) {
       const slots = await slotsFor(tx, candidate, input.preferredDate, service.durationMinutes, clock);
       if (!slots.includes(input.preferredTime)) continue;
@@ -274,5 +276,7 @@ async function createLive(
       return { ok: true as const, reference: created.reference, duplicate: false };
     }
     return { ok: false as const, code: "SLOT_UNAVAILABLE" as const };
-  });
+    },
+    { isolationLevel: Prisma.TransactionIsolationLevel.ReadCommitted },
+  );
 }

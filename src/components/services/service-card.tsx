@@ -4,7 +4,7 @@ import type { PublicService } from "@/types";
 import { BookLink } from "@/components/shared/book-link";
 
 /** One service in the ruled list: the name opens its page, the link starts a booking. */
-export function ServiceCard({ service, brief = false }: { service: PublicService; brief?: boolean }) {
+export function ServiceCard({ service }: { service: PublicService }) {
   return (
     <article className="flex items-start justify-between gap-8 border-t py-6">
       <div className="min-w-0">
@@ -13,7 +13,7 @@ export function ServiceCard({ service, brief = false }: { service: PublicService
             {service.name}
           </Link>
         </h3>
-        {!brief && <p className="text-pretty-p mt-2 leading-relaxed text-muted-foreground">{service.shortDescription}</p>}
+        <p className="text-pretty-p mt-2 leading-relaxed text-muted-foreground">{service.shortDescription}</p>
       </div>
       <BookLink
         quiet

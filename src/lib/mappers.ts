@@ -3,6 +3,11 @@ import { defaultClinic } from "@/config/clinic";
 import { openingHoursSchema } from "@/lib/validations";
 import type { ClinicInfo, OpeningHoursEntry, PublicProfessional, PublicService, Socials } from "@/types";
 
+/** `expertise` is a JSON column: keep only the strings, whatever was stored. */
+export function parseExpertise(value: unknown): string[] {
+  return Array.isArray(value) ? value.filter((v): v is string => typeof v === "string") : [];
+}
+
 export function parseOpeningHours(value: unknown): OpeningHoursEntry[] {
   const parsed = openingHoursSchema.safeParse(value);
   return parsed.success ? (parsed.data as OpeningHoursEntry[]) : defaultClinic.openingHours;
@@ -76,7 +81,7 @@ export function toPublicProfessional(row: ProfessionalRow): PublicProfessional {
     title: row.title,
     bio: row.bio,
     registrationNumber: row.registrationNumber,
-    expertise: row.expertise,
+    expertise: parseExpertise(row.expertise),
     imageUrl: mediaUrl(row.imageId),
     serviceIds: row.services.map((s) => s.serviceId),
   };

@@ -5,7 +5,7 @@ import { t } from "@/content";
 const palettes = [
   { bg: "var(--color-sand-200)", figure: "var(--color-forest-700)" },
   { bg: "var(--color-sage-200)", figure: "var(--color-forest-500)" },
-  { bg: "var(--color-sand-100)", figure: "var(--color-sage-500)" },
+  { bg: "var(--color-sand-100)", figure: "var(--color-coral-500)" },
 ];
 
 /**
@@ -19,6 +19,7 @@ export function Portrait({
   className,
   sizes = "(min-width: 1024px) 360px, (min-width: 640px) 45vw, 90vw",
   priority,
+  note = true,
 }: {
   name: string;
   imageUrl?: string | null;
@@ -26,6 +27,8 @@ export function Portrait({
   className?: string;
   sizes?: string;
   priority?: boolean;
+  /** Labels a missing photograph. Turn off where the name sits at the foot of the portrait. */
+  note?: boolean;
 }) {
   const p = palettes[index % palettes.length];
   return (
@@ -46,9 +49,11 @@ export function Portrait({
             <path d="M58 360c4-72 44-112 92-112s88 40 92 112Z" fill={p.figure} />
             <ellipse cx="150" cy="176" rx="46" ry="52" fill={p.figure} />
           </svg>
-          <span className="absolute bottom-3 left-3 rounded-full bg-card px-2.5 py-0.5 text-[0.6875rem] font-medium whitespace-nowrap text-card-foreground">
-            {t.team.photoPlaceholder}
-          </span>
+          {note && (
+            <span className="absolute bottom-3 left-3 rounded-full bg-card px-2.5 py-0.5 text-[0.6875rem] font-medium whitespace-nowrap text-card-foreground">
+              {t.team.photoPlaceholder}
+            </span>
+          )}
         </>
       )}
     </div>

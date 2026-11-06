@@ -5,7 +5,7 @@ import { ArrowLeft, Trash2 } from "lucide-react";
 import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { parseWorkingHours } from "@/lib/availability";
-import { mediaUrl } from "@/lib/mappers";
+import { mediaUrl, parseExpertise } from "@/lib/mappers";
 import { ProfessionalForm } from "@/components/admin/professional-form";
 import { SubmitButton } from "@/components/admin/confirm-button";
 import { deleteProfessional } from "../../actions";
@@ -48,7 +48,7 @@ export default async function EditProfessionalPage(props: PageProps<"/admin/prof
                 title: professional.title,
                 bio: professional.bio,
                 registrationNumber: professional.registrationNumber ?? "",
-                expertise: professional.expertise,
+                expertise: parseExpertise(professional.expertise),
                 sortOrder: professional.sortOrder,
                 enabled: professional.enabled,
                 serviceIds: professional.services.map((s) => s.serviceId),

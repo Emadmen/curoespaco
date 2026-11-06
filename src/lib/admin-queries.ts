@@ -24,8 +24,9 @@ export function appointmentWhere({ status, q, date }: AppointmentFilters): Prism
   if (q) {
     const digits = q.replace(/\D/g, "");
     where.OR = [
-      { name: { contains: q, mode: "insensitive" } },
-      { email: { contains: q, mode: "insensitive" } },
+      // MySQL's default collation already compares case-insensitively.
+      { name: { contains: q } },
+      { email: { contains: q } },
       { reference: { contains: q.toUpperCase() } },
       ...(digits.length >= 3 ? [{ phone: { contains: digits } }] : []),
     ];

@@ -76,12 +76,13 @@ run("booking requests (database)", () => {
         name: "Profissional A",
         title: "Psicóloga",
         bio: "bio",
+        expertise: [],
         workingHours: { "2": [{ start: "10:00", end: "12:00" }] },
         services: { create: [{ serviceId: "svc-a" }] },
       },
     });
     await db.professional.create({
-      data: { id: "pro-b", slug: "pro-b", name: "Profissional B", title: "Psicólogo", bio: "bio" },
+      data: { id: "pro-b", slug: "pro-b", name: "Profissional B", title: "Psicólogo", bio: "bio", expertise: [] },
     });
   });
 

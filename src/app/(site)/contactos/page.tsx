@@ -20,7 +20,7 @@ export default async function ContactPage() {
       <Section id="contactos" aria-label={t.nav.contact}>
         <ContactDetails clinic={clinic} />
       </Section>
-      <FaqSection whatsapp={clinic.whatsapp} />
+      <FaqSection />
     </>
   );
 }

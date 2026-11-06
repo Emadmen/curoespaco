@@ -8,7 +8,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
 }
 
 enum AppointmentStatus {
@@ -29,8 +29,8 @@ model Service {
   id               String   @id @default(cuid())
   slug             String   @unique
   name             String
-  shortDescription String
-  description      String
+  shortDescription String   @db.Text
+  description      String   @db.Text
   /// Key of an icon in src/components/services/service-icon.tsx
   icon             String   @default("sparkles")
   durationMinutes  Int      @default(50)
@@ -51,10 +51,11 @@ model Professional {
   name               String
   /// Specialty / role shown under the name, e.g. "Psicóloga Clínica".
   title              String
-  bio                String
+  bio                String   @db.Text
   /// Professional registration number (e.g. OPP cédula), only when applicable.
   registrationNumber String?
-  expertise          String[]
+  /// JSON array of strings, e.g. ["Adultos", "Ansiedade"] (MySQL has no array columns).
+  expertise          Json
   imageId            String?
   image              MediaAsset? @relation(fields: [imageId], references: [id], onDelete: SetNull)
   /// Weekly schedule used by LIVE booking mode: { "1": [{ "start": "09:00", "end": "13:00" }], ... }
@@ -87,7 +88,7 @@ model MediaAsset {
   id        String   @id @default(cuid())
   mimeType  String
   size      Int
-  data      Bytes
+  data      Bytes    @db.LongBlob
   createdAt DateTime @default(now())
 
   professionals Professional[]
@@ -140,7 +141,7 @@ model Appointment {
 model ClinicSettings {
   id            Int         @id @default(1)
   name          String
-  tagline       String
+  tagline       String      @db.Text
   phone         String
   whatsapp      String
   email         String
@@ -149,16 +150,16 @@ model ClinicSettings {
   postalCode    String
   city          String
   country       String      @default("PT")
-  mapsUrl       String?
-  mapsEmbedUrl  String?
+  mapsUrl       String?     @db.Text
+  mapsEmbedUrl  String?     @db.Text
   /// [{ "day": 1, "open": "09:00", "close": "20:00" } | { "day": 7, "closed": true }]
   openingHours  Json
   /// { "instagram": "https://…", "facebook": "https://…", "linkedin": "https://…" }
   socials       Json
   bookingMode   BookingMode @default(REQUEST)
-  heroTitle     String
-  heroSubtitle  String
-  aboutIntro    String
+  heroTitle     String      @db.Text
+  heroSubtitle  String      @db.Text
+  aboutIntro    String      @db.Text
   /// Appointment requests older than this are eligible for deletion (data minimisation).
   retentionDays Int         @default(365)
   updatedAt     DateTime    @updatedAt

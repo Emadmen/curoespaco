@@ -21,6 +21,8 @@ export function SiteHeader({ name, whatsapp, phone }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const whatsappUrl = buildWhatsAppUrl(whatsapp, whatsappMessages.general());
+  // The home hero is a dark photograph, so the header starts out inverted.
+  const overPhoto = pathname === "/" && !scrolled;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -34,31 +36,32 @@ export function SiteHeader({ name, whatsapp, phone }: Props) {
       className={cn(
         "sticky top-0 z-40 border-b transition-colors duration-300",
         scrolled ? "border-border bg-background" : "border-transparent bg-transparent",
+        overPhoto && "tone-forest",
       )}
     >
-      <div className="container-page flex h-[4.5rem] items-center justify-between gap-3 lg:grid lg:h-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,3fr)] lg:gap-12 xl:grid-cols-[minmax(0,1fr)_minmax(0,2.2fr)]">
+      <div className="container-page flex h-[4.5rem] items-center justify-between gap-3 lg:grid lg:h-20 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-12">
         <Logo name={name} />
 
-        <div className="flex items-center gap-2 lg:gap-10">
-          <nav aria-label="Principal" className="hidden flex-1 lg:block">
-            <ul className="flex items-center justify-between gap-4">
-              {navItems.map((item) => {
-                const active = isActive(pathname, item.href);
-                return (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      aria-current={active ? "page" : undefined}
-                      className={cn(textLinkVariants({ variant: "quiet" }), "text-[0.9375rem] whitespace-nowrap", active && "underline")}
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
+        <nav aria-label="Principal" className="hidden lg:block">
+          <ul className="flex items-center gap-8">
+            {navItems.map((item) => {
+              const active = isActive(pathname, item.href);
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    aria-current={active ? "page" : undefined}
+                    className={cn(textLinkVariants({ variant: "quiet" }), "text-[0.9375rem] whitespace-nowrap", active && "underline")}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
 
+        <div className="flex items-center justify-end gap-2 lg:gap-3">
           <a
             href={whatsappUrl}
             target="_blank"

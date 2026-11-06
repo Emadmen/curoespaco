@@ -28,7 +28,6 @@ export const ptPT = {
     knowOurSpace: "Conheça o nosso espaço",
     seeAllServices: "Ver todos os serviços",
     meetTeam: "Conhecer a equipa",
-    seeSpace: "Visitar o espaço",
     call: "Ligar",
     sendEmail: "Enviar email",
     openMaps: "Abrir no Google Maps",
@@ -45,9 +44,19 @@ export const ptPT = {
   },
   hero: {
     eyebrow: "Psicologia & Bem-Estar",
-    trustNote: "Sem registo · pedido em menos de 1 minuto",
+    imageAlt: "Copa de um jacarandá em flor, com ramos retorcidos, folhas verdes e flores lilás contra o céu azul",
+    statValue: "< 1 min",
+    statLabel: "para pedir a sua consulta, sem registo",
   },
-  statementImageAlt: "Mulher de cabelo grisalho deitada a sorrir, de olhos fechados, com um ramo de flores brancas ao peito",
+  journey: {
+    eyebrow: "O seu caminho",
+    title: "Um caminho feito ao seu ritmo",
+    steps: [
+      { title: "Escutar", text: "Começamos por ouvir, sem pressa e sem julgamentos." },
+      { title: "Compreender", text: "Procuramos, em conjunto, dar sentido ao que está a viver." },
+      { title: "Recomeçar", text: "Construímos estratégias que façam sentido para a sua vida." },
+    ],
+  },
   highlightsLabel: "O que pode esperar:",
   highlightsLink: "A nossa abordagem",
   highlights: [
@@ -58,7 +67,6 @@ export const ptPT = {
   about: {
     eyebrow: "Sobre nós",
     title: "Cuidar da saúde mental com tempo, proximidade e respeito",
-    imageAlt: "Mulher idosa de cabelo grisalho a descansar de olhos fechados, recostada numa poltrona coberta com mantas coloridas",
     philosophyTitle: "A nossa forma de estar",
     philosophy:
       "Acreditamos numa psicologia próxima, baseada na relação de confiança entre quem acompanha e quem é acompanhado. Sem fórmulas fechadas: cada pessoa tem a sua história e o seu ritmo.",
@@ -79,6 +87,10 @@ export const ptPT = {
   },
   services: {
     eyebrow: "Serviços",
+    helpEyebrow: "Como podemos ajudar",
+    more: "Saber mais",
+    all: "Ver todos os serviços",
+    imageAlt: "Mulher idosa de cabelo grisalho a descansar de olhos fechados, recostada numa poltrona coberta com mantas coloridas",
     title: "Acompanhamento para cada fase da vida",
     intro:
       "Escolha o tipo de acompanhamento que procura. Se tiver dúvidas, fale connosco — ajudamos a perceber qual o mais indicado.",
@@ -100,6 +112,8 @@ export const ptPT = {
     bioTitle: "Sobre mim",
     backToTeam: "Ver toda a equipa",
     photoPlaceholder: "Fotografia a adicionar",
+    profile: "Ver perfil",
+    show: "Conhecer",
   },
   space: {
     eyebrow: "O nosso espaço",
@@ -129,16 +143,30 @@ export const ptPT = {
         title: "Receba a confirmação da nossa equipa",
         text: "Entramos em contacto consigo para confirmar o horário.",
       },
+      {
+        title: "Venha à primeira consulta",
+        text: "Conversamos sobre o que o traz até nós e definimos juntos o caminho.",
+      },
     ],
+    imageAlt: "Cadeira de tons quentes junto a uma planta, numa sala calma com luz natural",
   },
   testimonials: {
     eyebrow: "Testemunhos",
     title: "Palavras de quem nos visitou",
+    previous: "Anterior",
+    next: "Seguinte",
+    show: "Ver testemunho",
+    sampleNote: "Exemplo: a substituir por um testemunho real",
+    /** Layout preview in development only. Never shown in production. */
+    samples: [
+      { id: "exemplo-a", author: "Exemplo A.", photo: "/images/testimonials/a.jpg", quote: "Texto de exemplo. Aqui ficará um testemunho real, publicado apenas com o consentimento de quem o deu." },
+      { id: "exemplo-b", author: "Exemplo B.", photo: "/images/testimonials/b.jpg", quote: "Texto de exemplo. Um testemunho pode ser assinado com iniciais ou um pseudónimo, nunca com o nome completo sem autorização." },
+      { id: "exemplo-c", author: "Exemplo C.", photo: "/images/testimonials/c.jpg", quote: "Texto de exemplo. Se não houver testemunhos reais, esta secção não aparece no site." },
+    ],
   },
   faq: {
     eyebrow: "Perguntas frequentes",
     title: "Tem dúvidas? Nós ajudamos.",
-    intro: "Se não encontrar aqui a resposta, fale connosco — teremos todo o gosto em ajudar.",
     items: [
       {
         q: "Como posso marcar uma consulta?",
@@ -166,7 +194,14 @@ export const ptPT = {
       },
     ],
   },
+  crisis: {
+    lead: "Se está em crise ou tem pensamentos de suicídio, há quem possa ajudar agora. Ligue",
+    line: "1411",
+    lineNote: ", a Linha Nacional de Prevenção do Suicídio, gratuita e disponível 24 horas por dia. Em perigo imediato, ligue",
+    emergency: "112",
+  },
   ctaBand: {
+    eyebrow: "Estamos aqui",
     title: "Dar o primeiro passo pode ser simples.",
     text: "Faça o seu pedido de marcação em menos de um minuto ou fale connosco pelo WhatsApp.",
   },

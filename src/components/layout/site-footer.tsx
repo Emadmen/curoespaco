@@ -10,7 +10,7 @@ import { TextLink, textLinkVariants } from "@/components/ui/text-link";
 import { navItems } from "@/components/layout/nav-items";
 
 const quiet = textLinkVariants({ variant: "quiet" });
-const columnTitle = "eyebrow font-sans";
+const columnTitle = "label-caps font-sans";
 
 export async function SiteFooter({ clinic }: { clinic: ClinicInfo }) {
   const year = await getCurrentYear();
@@ -24,7 +24,7 @@ export async function SiteFooter({ clinic }: { clinic: ClinicInfo }) {
           <Logo name={clinic.name} />
           <p className="mt-5 text-[0.9375rem] leading-relaxed text-muted-foreground">{t.footer.description}</p>
           {socials.length > 0 && (
-            <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[0.9375rem]">
+            <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-1 text-[0.9375rem] [&_a]:inline-block [&_a]:py-1">
               {socials.map(([key, url]) => (
                 <li key={key}>
                   <a href={url} target="_blank" rel="noopener noreferrer" className={textLinkVariants({ variant: "inline" })}>
@@ -38,7 +38,7 @@ export async function SiteFooter({ clinic }: { clinic: ClinicInfo }) {
 
         <nav aria-label={t.footer.navigation}>
           <h2 className={columnTitle}>{t.footer.navigation}</h2>
-          <ul className="mt-5 space-y-3 text-[0.9375rem]">
+          <ul className="mt-5 space-y-2 text-[0.9375rem] [&_a]:inline-block [&_a]:py-1">
             {navItems.map((item) => (
               <li key={item.href}>
                 <TextLink href={item.href} variant="quiet">
@@ -56,7 +56,7 @@ export async function SiteFooter({ clinic }: { clinic: ClinicInfo }) {
 
         <div>
           <h2 className={columnTitle}>{t.footer.contacts}</h2>
-          <ul className="mt-5 space-y-3 text-[0.9375rem]">
+          <ul className="mt-5 space-y-2 text-[0.9375rem] [&_a]:inline-block [&_a]:py-1">
             <li>
               <address className="text-muted-foreground not-italic">
                 {clinic.addressLine1}
@@ -102,7 +102,7 @@ export async function SiteFooter({ clinic }: { clinic: ClinicInfo }) {
           <p>
             © {year} {clinic.name}. {t.footer.rights}
           </p>
-          <ul className="flex flex-wrap gap-x-5 gap-y-2" aria-label={t.footer.legal}>
+          <ul className="flex flex-wrap gap-x-5 gap-y-1 [&_a]:inline-block [&_a]:py-1" aria-label={t.footer.legal}>
             <li><Link href="/politica-de-privacidade" className={quiet}>{t.footer.privacy}</Link></li>
             <li><Link href="/termos-e-condicoes" className={quiet}>{t.footer.terms}</Link></li>
             <li>

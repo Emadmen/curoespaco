@@ -45,16 +45,16 @@ test.describe("WhatsApp links", () => {
 
   test("therapist card and profile use the therapist message", async ({ page }) => {
     await page.goto("/equipa");
-    const card = page.locator("article").filter({ hasText: "Inês Exemplo" });
-    const message = "Olá! Gostaria de saber a disponibilidade para uma consulta com Inês Exemplo. Obrigado/a!";
+    const card = page.locator("article").filter({ hasText: "Talita Ramos" });
+    const message = "Olá! Gostaria de saber a disponibilidade para uma consulta com Talita Ramos. Obrigado/a!";
     expectWaLink(await card.locator("[data-whatsapp-link]").getAttribute("href"), message);
 
-    await page.goto("/equipa/ines-exemplo");
+    await page.goto("/equipa/talita-ramos");
     expectWaLink(await page.locator("main [data-whatsapp-link]").first().getAttribute("href"), message);
   });
 
   test("booking page offers WhatsApp with the selected preferences", async ({ page }) => {
-    await page.goto("/marcar-consulta?servico=psicologia-infantil&profissional=ines-exemplo");
+    await page.goto("/marcar-consulta?servico=psicologia-infantil&profissional=talita-ramos");
     await page.locator("[data-date]:not([disabled])").first().waitFor();
     // The generic aside link stays available even before the form is complete.
     const aside = page.locator("aside [data-whatsapp-link]");

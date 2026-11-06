@@ -7,27 +7,30 @@
 
 /*
  * Cora design system. See docs/design-system.md.
- * Flat colour bands, hairline rules and one typeface: no gradients, no
- * shadows. Components use the semantic tokens; the raw scales below are only
- * for picking a band or a tint.
+ * Warm paper, coral and cocoa ink, and photographs lit like late afternoon. One typeface,
+ * set light and tight. Components use the semantic tokens; the raw scales below
+ * are only for picking a band or a tint.
  */
 
 /* ─── Palette ─────────────────────────────────────────────────────────────── */
 @theme {
-  --color-sage-100: #e6ede9;
-  --color-sage-200: #d1ddd6;
-  --color-sage-300: #b2c1ba;
-  --color-sage-400: #93ab9e;
-  --color-sage-500: #6f8d7d;
+  --color-coral-400: #fbcfbe;
+  --color-coral-500: #f8b9a2;
+  --color-coral-600: #f29f82;
 
-  --color-sand-100: #f4f0e9;
-  --color-sand-200: #e2dacd;
-  --color-sand-300: #cfc6b6;
+  --color-sage-100: #fde9e1;
+  --color-sage-200: #fbd3c4;
+  --color-sage-300: #f8b9a2;
 
-  --color-forest-500: #3a6f58;
-  --color-forest-700: #00401c;
-  --color-forest-800: #003316;
-  --color-forest-900: #00260f;
+  --color-sand-50: #fdf8f3;
+  --color-sand-100: #f9f0e7;
+  --color-sand-200: #f3e4d6;
+  --color-sand-300: #e8d3c0;
+
+  --color-forest-500: #5f3a2d;
+  --color-forest-700: #33211a;
+  --color-forest-800: #281912;
+  --color-forest-900: #1a100b;
 
   --color-warning-100: #f3e6c8;
   --color-warning-800: #654607;
@@ -38,9 +41,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-franklin), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, monospace;
-  --font-heading: var(--font-franklin), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -66,27 +69,28 @@
 
 /* ─── Semantic tokens (shadcn/ui) ─────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
+  --background: var(--color-sand-50);
   --foreground: var(--color-forest-700);
   --card: #ffffff;
   --card-foreground: var(--color-forest-700);
   --popover: #ffffff;
   --popover-foreground: var(--color-forest-700);
-  --primary: var(--color-forest-700);
-  --primary-foreground: #ffffff;
+  /* Coral takes dark text: white on it is only about 3:1. */
+  --primary: var(--color-coral-500);
+  --primary-foreground: var(--color-forest-900);
   --secondary: var(--color-sand-200);
   --secondary-foreground: var(--color-forest-700);
   --muted: var(--color-sand-100);
   /* Dark enough to stay readable (4.5:1) on the sage band as well as on white. */
-  --muted-foreground: #1f4a36;
+  --muted-foreground: #4f3429;
   --accent: var(--color-sage-200);
   --accent-foreground: var(--color-forest-700);
   --destructive: var(--color-danger-700);
-  /* Translucent, so the same hairline works on white, sand and sage. */
-  --border: rgb(0 64 28 / 0.18);
-  --input: rgb(0 64 28 / 0.42);
+  /* Translucent, so the same hairline works on paper, sand and sage. */
+  --border: rgb(51 33 26 / 0.16);
+  --input: rgb(51 33 26 / 0.42);
   --ring: var(--color-forest-700);
-  --radius: 0.75rem;
+  --radius: 1rem;
 }
 
 @layer base {
@@ -105,8 +109,8 @@
   h2,
   h3 {
     @apply text-balance;
-    font-weight: 400;
-    letter-spacing: -0.02em;
+    font-weight: 300;
+    letter-spacing: -0.03em;
   }
   ::selection {
     background: var(--color-sage-300);
@@ -124,8 +128,8 @@
   --foreground: #ffffff;
   --card: var(--color-forest-800);
   --card-foreground: #ffffff;
-  --primary: #ffffff;
-  --primary-foreground: var(--color-forest-700);
+  --primary: var(--color-coral-500);
+  --primary-foreground: var(--color-forest-900);
   --secondary: var(--color-forest-500);
   --secondary-foreground: #ffffff;
   --muted-foreground: var(--color-sage-200);
@@ -159,15 +163,6 @@
   }
 }
 
-/* Home hero: the logo on the left, the text block on the right. */
-@utility grid-hero {
-  display: grid;
-  gap: 2rem 3rem;
-  @media (width >= 64rem) {
-    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-  }
-}
-
 /* Two even-handed columns: a heading beside its content, so a section fits one screen. */
 @utility grid-side {
   display: grid;
@@ -183,21 +178,21 @@
  * would read a custom `text-*` size as a colour and drop it.
  */
 @utility type-display-xl {
-  font-size: clamp(2.375rem, 4vw, 5rem);
-  line-height: 1;
-  letter-spacing: -0.025em;
+  font-size: clamp(2rem, 1.04rem + 2.2vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
 }
 
 @utility type-display-lg {
   font-size: clamp(2.125rem, 1.5rem + 2.6vw, 4rem);
   line-height: 1.04;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.035em;
 }
 
 @utility type-display-md {
   font-size: clamp(1.75rem, 1.45rem + 1.4vw, 2.625rem);
   line-height: 1.14;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
 }
 
 @utility type-display-sm {
@@ -213,11 +208,20 @@
   }
 }
 
+/* The section label: a small uppercase pill. */
 @utility eyebrow {
-  display: block;
-  font-size: 0.8125rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.6875rem;
   line-height: 1.35;
-  font-weight: 600;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--foreground);
 }
 
@@ -242,6 +246,68 @@
   background: var(--color-sand-100);
 }
 
+/* A frosted panel, only for use on top of a photograph. */
+@utility glass {
+  border: 1px solid var(--border);
+  background: rgb(255 255 255 / 0.1);
+  backdrop-filter: blur(16px);
+}
+
+/* Soft coral light, standing in for a photograph on small shapes. Takes dark text. */
+@utility ember {
+  background:
+    radial-gradient(60% 110% at 30% 20%, #fcd8ca 0%, transparent 70%),
+    radial-gradient(40% 90% at 70% 35%, #f9c3af 0%, transparent 70%),
+    radial-gradient(90% 120% at 80% 95%, #f29f82 0%, transparent 65%),
+    linear-gradient(135deg, #f8b9a2, #f29f82);
+}
+
+/* A streak of coral light over a dark ground, for the closing band. */
+@utility glow {
+  background:
+    radial-gradient(38% 110% at 70% -5%, rgb(248 185 162 / 0.8) 0%, transparent 72%),
+    radial-gradient(26% 80% at 42% 108%, rgb(251 207 190 / 0.42) 0%, transparent 72%),
+    linear-gradient(115deg, #1a100b 0%, #33211a 48%, #1a100b 100%);
+}
+
+/* Darkens a photograph so white text stays readable, most of all at the foot. */
+@utility scrim {
+  background: linear-gradient(
+    to top,
+    rgb(26 16 11 / 0.92) 0%,
+    rgb(26 16 11 / 0.66) 45%,
+    rgb(26 16 11 / 0.26) 72%,
+    rgb(26 16 11 / 0.62) 100%
+  );
+}
+
+/*
+ * Hero only: a whisper of shade at the top for the navigation and behind the
+ * text at the foot. It clears before the bottom edge so the fade below is clean.
+ */
+@utility hero-scrim {
+  background:
+    linear-gradient(to bottom, rgb(26 16 11 / 0.22) 0%, rgb(26 16 11 / 0) 14%),
+    linear-gradient(to top, rgb(26 16 11 / 0.06) 0%, rgb(26 16 11 / 0.26) 14%, rgb(26 16 11 / 0.12) 34%, rgb(26 16 11 / 0) 52%);
+}
+
+/*
+ * Hero only: the photograph itself dissolves into the paper over its last
+ * ~26rem, on eased stops, so there is no dark layer and no visible edge.
+ */
+@utility hero-photo-fade {
+  mask-image: linear-gradient(
+    to bottom,
+    black calc(100% - 26rem),
+    rgb(0 0 0 / 0.93) calc(100% - 22rem),
+    rgb(0 0 0 / 0.78) calc(100% - 18rem),
+    rgb(0 0 0 / 0.56) calc(100% - 14rem),
+    rgb(0 0 0 / 0.32) calc(100% - 10rem),
+    rgb(0 0 0 / 0.12) calc(100% - 6rem),
+    transparent calc(100% - 2.5rem)
+  );
+}
+
 /*
  * Starting state for GSAP entrances, set here so nothing flashes before
  * hydration. Without JavaScript or with reduced motion the page stays as it is.
@@ -259,6 +325,21 @@
   [data-contour] {
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
+  }
+  /* Only the moving version needs the length to scroll through, and one caption at a time. */
+  [data-journey-track] {
+    height: 280svh;
+  }
+  [data-journey-caption] {
+    grid-area: 1 / 1;
+  }
+  [data-journey-caption]:not(:first-child) {
+    opacity: 0;
+  }
+  @media (min-width: 64rem) {
+    [data-steps-track] {
+      height: 220svh;
+    }
   }
 }
 

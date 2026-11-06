@@ -8,7 +8,7 @@ import { defineConfig, devices } from "@playwright/test";
  */
 const PORT = Number(process.env.E2E_PORT ?? 3100);
 const E2E_DATABASE_URL =
-  process.env.E2E_DATABASE_URL ?? "postgresql://cora:cora_dev_password@localhost:5433/cora_e2e?schema=public";
+  process.env.E2E_DATABASE_URL ?? "mysql://cora:cora_dev_password@localhost:3307/cora_e2e";
 
 export const E2E_ADMIN = { email: "e2e-admin@example.com", password: "e2e-admin-password-123" };
 

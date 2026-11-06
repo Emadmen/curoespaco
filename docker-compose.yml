@@ -1,23 +1,25 @@
 # Local development database. Not intended for production use.
+# MariaDB, to match Hostinger's managed "MySQL" databases.
 services:
   db:
-    image: postgres:17-alpine
-    container_name: cora-db
+    image: mariadb:11.4
+    container_name: cora-mysql
     restart: unless-stopped
     environment:
-      POSTGRES_USER: cora
-      POSTGRES_PASSWORD: cora_dev_password
-      POSTGRES_DB: cora
+      MARIADB_USER: cora
+      MARIADB_PASSWORD: cora_dev_password
+      MARIADB_DATABASE: cora
+      MARIADB_ROOT_PASSWORD: cora_root_password
     ports:
-      - "5433:5432"
+      - "3307:3306"
     volumes:
-      - cora-db-data:/var/lib/postgresql/data
+      - cora-mysql-data:/var/lib/mysql
       - ./docker/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U cora -d cora"]
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 5s
       timeout: 5s
       retries: 10
 
 volumes:
-  cora-db-data:
+  cora-mysql-data:

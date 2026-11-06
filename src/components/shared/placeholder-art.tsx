@@ -38,9 +38,9 @@ export function PlaceholderArt({
 function Plant({ x, scale = 1 }: { x: number; scale?: number }) {
   return (
     <g transform={`translate(${x} 228) scale(${scale})`}>
-      <path d="M-14 0h28l-4-26h-20Z" fill="var(--color-sage-400)" />
+      <path d="M-14 0h28l-4-26h-20Z" fill="var(--color-coral-400)" />
       <path d="M0-26c-2-30 4-54 14-70-2 24 0 48-8 70Z" fill="var(--color-forest-500)" />
-      <path d="M-2-26c-14-20-28-30-44-32 8 14 22 26 40 36Z" fill="var(--color-sage-500)" />
+      <path d="M-2-26c-14-20-28-30-44-32 8 14 22 26 40 36Z" fill="var(--color-coral-500)" />
       <path d="M2-30c10-22 26-34 42-38-8 16-22 30-38 42Z" fill="var(--color-forest-700)" />
     </g>
   );
@@ -70,10 +70,10 @@ function Room() {
       <ArchWindow x={60} />
       <ellipse cx="230" cy="262" rx="130" ry="18" fill="var(--color-sage-200)" />
       {/* armchair */}
-      <rect x="180" y="150" width="96" height="70" rx="30" fill="var(--color-sage-400)" />
-      <rect x="168" y="186" width="120" height="44" rx="18" fill="var(--color-sage-500)" />
-      <rect x="160" y="178" width="26" height="54" rx="13" fill="var(--color-sage-400)" />
-      <rect x="270" y="178" width="26" height="54" rx="13" fill="var(--color-sage-400)" />
+      <rect x="180" y="150" width="96" height="70" rx="30" fill="var(--color-coral-400)" />
+      <rect x="168" y="186" width="120" height="44" rx="18" fill="var(--color-coral-500)" />
+      <rect x="160" y="178" width="26" height="54" rx="13" fill="var(--color-coral-400)" />
+      <rect x="270" y="178" width="26" height="54" rx="13" fill="var(--color-coral-400)" />
       <path d="M180 232l-4 14M276 232l4 14" stroke="var(--color-forest-700)" strokeWidth="5" strokeLinecap="round" />
       {/* side table + lamp */}
       <rect x="312" y="190" width="44" height="6" rx="3" fill="var(--color-forest-700)" />
@@ -99,7 +99,7 @@ function Group() {
       <ArchWindow x={280} w={84} h={120} />
       <ellipse cx="200" cy="262" rx="150" ry="20" fill="var(--color-sage-100)" />
       {chair(92, "var(--color-sage-300)")}
-      {chair(171, "var(--color-sage-400)")}
+      {chair(171, "var(--color-coral-400)")}
       {chair(250, "var(--color-sage-300)")}
       <circle cx="200" cy="120" r="16" fill="#fff" stroke="var(--color-sage-200)" strokeWidth="2" />
       <path d="M200 60v44" stroke="var(--color-forest-500)" strokeWidth="2" />
@@ -111,7 +111,7 @@ function Reception() {
   return (
     <g>
       {/* wall art */}
-      <circle cx="110" cy="96" r="38" fill="var(--color-sage-400)" opacity=".8" />
+      <circle cx="110" cy="96" r="38" fill="var(--color-coral-400)" opacity=".8" />
       <circle cx="140" cy="110" r="30" fill="var(--color-sage-300)" style={{ mixBlendMode: "multiply" }} />
       {/* pendant lights */}
       {[230, 290].map((x) => (
@@ -135,12 +135,12 @@ function Waiting() {
   return (
     <g>
       <rect x="250" y="56" width="90" height="70" rx="10" fill="#fff" stroke="var(--color-sand-300)" strokeWidth="4" />
-      <path d="M262 112c14-20 24-26 34-14s18 6 32-12" stroke="var(--color-sage-400)" strokeWidth="5" fill="none" strokeLinecap="round" />
+      <path d="M262 112c14-20 24-26 34-14s18 6 32-12" stroke="var(--color-coral-400)" strokeWidth="5" fill="none" strokeLinecap="round" />
       <ArchWindow x={56} w={86} h={124} />
       {/* sofa */}
-      <rect x="160" y="160" width="200" height="56" rx="24" fill="var(--color-sage-400)" />
+      <rect x="160" y="160" width="200" height="56" rx="24" fill="var(--color-coral-400)" />
       <rect x="148" y="190" width="224" height="40" rx="18" fill="var(--color-sage-300)" />
-      <rect x="176" y="168" width="40" height="34" rx="12" fill="var(--color-sage-400)" />
+      <rect x="176" y="168" width="40" height="34" rx="12" fill="var(--color-coral-400)" />
       <rect x="300" y="168" width="40" height="34" rx="12" fill="var(--color-sage-100)" />
       <path d="M164 230l-3 12M356 230l3 12" stroke="var(--color-forest-700)" strokeWidth="5" strokeLinecap="round" />
       {/* coffee table */}
@@ -156,7 +156,7 @@ function Kids() {
     <g>
       {/* rainbow */}
       <g fill="none" strokeLinecap="round" strokeWidth="16">
-        <path d="M70 150a70 70 0 0 1 140 0" stroke="var(--color-sage-400)" />
+        <path d="M70 150a70 70 0 0 1 140 0" stroke="var(--color-coral-400)" />
         <path d="M92 150a48 48 0 0 1 96 0" stroke="var(--color-sage-300)" />
         <path d="M114 150a26 26 0 0 1 52 0" stroke="var(--color-sand-200)" />
       </g>
@@ -164,13 +164,13 @@ function Kids() {
       <ellipse cx="270" cy="200" rx="70" ry="14" fill="#fff" />
       <path d="M220 206v30M320 206v30" stroke="var(--color-forest-700)" strokeWidth="6" strokeLinecap="round" />
       {/* blocks */}
-      <rect x="240" y="168" width="24" height="24" rx="4" fill="var(--color-sage-400)" />
-      <rect x="268" y="172" width="20" height="20" rx="4" fill="var(--color-sage-400)" />
+      <rect x="240" y="168" width="24" height="24" rx="4" fill="var(--color-coral-400)" />
+      <rect x="268" y="172" width="20" height="20" rx="4" fill="var(--color-coral-400)" />
       <path d="M252 168l12-20 12 20Z" fill="var(--color-forest-700)" />
       {/* beanbag */}
       <path d="M50 236c0-34 30-56 62-56s60 22 60 56Z" fill="var(--color-sage-300)" />
-      <circle cx="350" cy="240" r="14" fill="var(--color-sage-400)" />
-      <circle cx="372" cy="246" r="8" fill="var(--color-sage-400)" />
+      <circle cx="350" cy="240" r="14" fill="var(--color-coral-400)" />
+      <circle cx="372" cy="246" r="8" fill="var(--color-coral-400)" />
     </g>
   );
 }

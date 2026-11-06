@@ -1,12 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Libre_Franklin } from "next/font/google";
+import { Inter_Tight } from "next/font/google";
 import { siteConfig } from "@/config/clinic";
 import { getClinic } from "@/lib/data";
 import "./globals.css";
 
-const sans = Libre_Franklin({
-  variable: "--font-franklin",
+const sans = Inter_Tight({
+  variable: "--font-inter-tight",
   subsets: ["latin", "latin-ext"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -28,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#b2c1ba",
+  themeColor: "#1a100b",
   width: "device-width",
   initialScale: 1,
 };

@@ -32,9 +32,9 @@ test.describe("Online appointment request", () => {
     expect(reference).toMatch(/^CR-[A-Z2-9]{6}$/);
 
     const rows = await query<{ status: string; preferred_time: string; service: string; prof: string | null; d: string }>(
-      `SELECT status, "preferredTime" AS preferred_time, "serviceName" AS service, "professionalName" AS prof,
-              to_char("preferredDate", 'YYYY-MM-DD') AS d
-         FROM "Appointment" WHERE reference = $1`,
+      `SELECT status, preferredTime AS preferred_time, serviceName AS service, professionalName AS prof,
+              DATE_FORMAT(preferredDate, '%Y-%m-%d') AS d
+         FROM Appointment WHERE reference = ?`,
       [reference],
     );
     expect(rows).toEqual([{ status: "PENDING", preferred_time: time, service: "Psicologia Individual", prof: null, d: date }]);
@@ -67,7 +67,7 @@ test.describe("Online appointment request", () => {
     await expect(page.getByTestId("booking-success")).toBeVisible();
     const reference = (await page.getByTestId("booking-reference").textContent())!.trim();
     const rows = await query<{ prof: string; service: string }>(
-      `SELECT "professionalName" AS prof, "serviceName" AS service FROM "Appointment" WHERE reference = $1`,
+      `SELECT professionalName AS prof, serviceName AS service FROM Appointment WHERE reference = ?`,
       [reference],
     );
     expect(rows).toEqual([{ prof: "Rui Exemplo", service: "Terapia de Casal" }]);
@@ -125,7 +125,7 @@ test.describe("Online appointment request", () => {
     await page.evaluate(() => (document.querySelector("form") as HTMLFormElement | null)?.requestSubmit());
 
     await expect(page.getByTestId("booking-success")).toBeVisible();
-    const rows = await query(`SELECT id FROM "Appointment" WHERE phone = $1`, [`+351${phone}`]);
+    const rows = await query(`SELECT id FROM Appointment WHERE phone = ?`, [`+351${phone}`]);
     expect(rows).toHaveLength(1);
   });
 
@@ -133,7 +133,7 @@ test.describe("Online appointment request", () => {
     await page.route("**/api/bookings", (route) =>
       route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ ok: false, code: "SERVER_ERROR" }) }),
     );
-    await page.goto("/marcar-consulta?servico=psicologia-individual&profissional=marta-exemplo");
+    await page.goto("/marcar-consulta?servico=psicologia-individual&profissional=ana-carol");
     await pickDateAndTime(page);
     await page.getByRole("button", { name: t.booking.next }).click();
     await fillContact(page, { name: "Erro Servidor", phone: uniquePhone() });
@@ -145,7 +145,7 @@ test.describe("Online appointment request", () => {
     await expect(page.getByTestId("booking-success")).toHaveCount(0);
     // WhatsApp fallback still works when the backend is down.
     const text = textParam(await alert.getByRole("link", { name: t.booking.whatsappFallback }).getAttribute("href"));
-    expect(text).toContain("Profissional: Marta Exemplo");
+    expect(text).toContain("Profissional: Ana Carol");
   });
 
   test("a network failure or malformed response is not treated as success", async ({ page }) => {

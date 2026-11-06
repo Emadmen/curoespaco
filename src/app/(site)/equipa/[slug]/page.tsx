@@ -64,10 +64,11 @@ export default async function ProfessionalPage(props: PageProps<"/equipa/[slug]"
                 {t.team.registration}: {professional.registrationNumber}
               </p>
             )}
-            <div className="mt-12 flex flex-wrap items-center gap-x-10 gap-y-6">
-              <BookLink cta professional={professional.slug} label={t.cta.bookWithProfessional} />
+            <div className="mt-12 flex flex-wrap items-center gap-3">
+              <BookLink size="xl" professional={professional.slug} label={t.cta.bookWithProfessional} />
               <WhatsAppLink
-                cta
+                variant="secondary"
+                size="xl"
                 number={clinic.whatsapp}
                 message={whatsappMessages.therapist(professional.name)}
                 label={t.cta.whatsappLong}

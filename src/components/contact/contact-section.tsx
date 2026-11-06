@@ -16,7 +16,7 @@ const quiet = textLinkVariants({ variant: "quiet" });
 function Item({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="grid gap-1.5 border-t py-6 sm:grid-cols-[9rem_1fr] sm:gap-8">
-      <h3 className="eyebrow pt-0.5 tracking-normal">{title}</h3>
+      <h3 className="label-caps pt-0.5">{title}</h3>
       <div className="min-w-0 text-[1.0625rem]">{children}</div>
     </div>
   );

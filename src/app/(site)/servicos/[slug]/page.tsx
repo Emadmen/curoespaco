@@ -48,10 +48,11 @@ export default async function ServicePage(props: PageProps<"/servicos/[slug]">) 
         intro={service.shortDescription}
         aside={<ServiceIcon name={service.icon} className="size-12 max-lg:hidden" />}
       >
-        <div className="flex flex-wrap items-center gap-x-10 gap-y-6">
-          <BookLink cta service={service.slug} />
+        <div className="flex flex-wrap items-center gap-3">
+          <BookLink size="xl" service={service.slug} />
           <WhatsAppLink
-            cta
+            variant="secondary"
+            size="xl"
             number={clinic.whatsapp}
             message={whatsappMessages.service(service.name)}
             label={t.cta.whatsappLong}

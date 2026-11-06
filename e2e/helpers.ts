@@ -1,16 +1,15 @@
 import { expect, type Page } from "@playwright/test";
-import pg from "pg";
+import mariadb from "mariadb";
 import { t } from "../src/content";
 
 export const E2E_DATABASE_URL =
-  process.env.E2E_DATABASE_URL ?? "postgresql://cora:cora_dev_password@localhost:5433/cora_e2e?schema=public";
+  process.env.E2E_DATABASE_URL ?? "mysql://cora:cora_dev_password@localhost:3307/cora_e2e";
 
 /** Runs a read-only query against the e2e database. */
 export async function query<T = Record<string, unknown>>(sql: string, params: unknown[] = []): Promise<T[]> {
-  const client = new pg.Client({ connectionString: E2E_DATABASE_URL.replace("?schema=public", "") });
-  await client.connect();
+  const client = await mariadb.createConnection(E2E_DATABASE_URL.replace(/^mysql:/, "mariadb:"));
   try {
-    return (await client.query(sql, params)).rows as T[];
+    return [...(await client.query(sql, params))] as T[];
   } finally {
     await client.end();
   }

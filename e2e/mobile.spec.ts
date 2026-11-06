@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { t } from "../src/content";
 
-const pages = ["/", "/sobre", "/servicos", "/servicos/psicologia-individual", "/equipa", "/equipa/marta-exemplo", "/espaco", "/contactos", "/marcar-consulta"];
+const pages = ["/", "/sobre", "/servicos", "/servicos/psicologia-individual", "/equipa", "/equipa/ana-carol", "/espaco", "/contactos", "/marcar-consulta"];
 
 test.describe("Mobile", () => {
   for (const width of [320, 360]) {

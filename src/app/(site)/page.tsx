@@ -1,15 +1,13 @@
-import { galleryImages, testimonials } from "@/config/clinic";
+import { testimonials } from "@/config/clinic";
 import { getClinic, getProfessionals, getServices } from "@/lib/data";
 import { Hero } from "@/components/home/hero";
+import { Journey } from "@/components/home/journey";
+import { ServicesSection } from "@/components/home/services";
+import { Steps } from "@/components/home/steps";
+import { TeamShowcase } from "@/components/home/team-showcase";
 import {
-  AboutSection,
   CtaBand,
   Highlights,
-  HowItWorks,
-  ServicesSection,
-  SpaceSection,
-  Statement,
-  TeamSection,
   TestimonialsSection,
 } from "@/components/home/sections";
 import { FaqSection } from "@/components/home/faq-section";
@@ -19,16 +17,14 @@ export default async function HomePage() {
   const [clinic, services, professionals] = await Promise.all([getClinic(), getServices(), getProfessionals()]);
   return (
     <>
-      <Hero clinic={clinic} />
-      <Statement text={clinic.heroSubtitle} />
-      <Highlights />
-      <AboutSection clinic={clinic} />
-      <ServicesSection services={services} whatsapp={clinic.whatsapp} />
-      <HowItWorks whatsapp={clinic.whatsapp} />
-      <TeamSection professionals={professionals} whatsapp={clinic.whatsapp} />
-      <SpaceSection images={galleryImages} />
+      <Hero clinic={clinic} professionals={professionals} />
+      <Journey statement={clinic.heroSubtitle} />
+      <ServicesSection services={services} />
+      <Steps />
       <TestimonialsSection items={testimonials} />
-      <FaqSection whatsapp={clinic.whatsapp} />
+      <TeamShowcase professionals={professionals} />
+      <Highlights />
+      <FaqSection />
       <CtaBand whatsapp={clinic.whatsapp} />
       <ContactSection clinic={clinic} />
     </>

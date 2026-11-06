@@ -152,19 +152,19 @@ export const defaultServices: PublicService[] = [
 ];
 
 /**
- * Sample team members. Names, bios and registration numbers are fictional
- * placeholders and must be replaced with real, verified information.
+ * The team. Ana Carol and Talita Ramos are real; their titles, bios and registration
+ * numbers, and Rui Exemplo entirely, are placeholders to replace with verified information.
  */
 export const defaultProfessionals: PublicProfessional[] = [
   {
     id: "pro-marta",
-    slug: "marta-exemplo",
-    name: "Marta Exemplo",
+    slug: "ana-carol",
+    name: "Ana Carol",
     title: "Psicóloga Clínica",
     bio: "Texto de apresentação de exemplo. Aqui pode descrever, numa linguagem próxima, a forma como acompanha as pessoas e o que valoriza na relação terapêutica.",
     registrationNumber: "OPP n.º 00000 (exemplo)",
     expertise: ["Adultos", "Adolescentes", "Grupos"],
-    imageUrl: null,
+    imageUrl: "/images/team/ana-carol.jpg",
     serviceIds: ["svc-individual", "svc-adolescentes", "svc-grupo", "svc-avaliacao"],
   },
   {
@@ -180,13 +180,13 @@ export const defaultProfessionals: PublicProfessional[] = [
   },
   {
     id: "pro-ines",
-    slug: "ines-exemplo",
-    name: "Inês Exemplo",
+    slug: "talita-ramos",
+    name: "Talita Ramos",
     title: "Psicóloga · Infância e Adolescência",
     bio: "Texto de apresentação de exemplo. Use este espaço para apresentar o trabalho com crianças, adolescentes e famílias, de forma simples e acolhedora.",
     registrationNumber: "OPP n.º 00000 (exemplo)",
     expertise: ["Crianças", "Adolescentes", "Pais"],
-    imageUrl: null,
+    imageUrl: "/images/team/talita-ramos.jpg",
     serviceIds: ["svc-infantil", "svc-adolescentes", "svc-familiar", "svc-avaliacao"],
   },
 ];

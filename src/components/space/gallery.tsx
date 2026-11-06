@@ -78,7 +78,7 @@ export function Gallery({ images, layout = "mosaic" }: { images: GalleryImage[];
                 <div className="relative aspect-[4/3] w-full max-w-5xl overflow-hidden rounded-xl bg-sage-100">
                   <Media image={current} sizes="90vw" />
                 </div>
-                <div className="mt-4 flex w-full max-w-5xl items-center justify-between gap-4 text-primary-foreground">
+                <div className="mt-4 flex w-full max-w-5xl items-center justify-between gap-4 text-white">
                   <div>
                     <DialogPrimitive.Title className="type-display-sm">{current.title}</DialogPrimitive.Title>
                     <DialogPrimitive.Description className="text-sm text-sage-200">

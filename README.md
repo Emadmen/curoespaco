@@ -131,7 +131,7 @@ The app is a standard Next.js server with MySQL or MariaDB. It runs on Hostinger
 4. Once only: `ADMIN_EMAIL=… ADMIN_PASSWORD=… npm run db:seed` to create the admin and initial content.
 5. Start: `npm start` (or let your platform run it).
 6. Schedule `npm run db:purge` daily (cron, GitHub Action or platform scheduler).
-7. Serve only over HTTPS. The app sends HSTS and other security headers (`next.config.ts`).
+7. Serve only over HTTPS. The app sends HSTS and other security headers (`next.config.mjs`).
 
 Notes:
 - Uploaded portraits are stored in the database (`MediaAsset`), so no extra storage service is needed.

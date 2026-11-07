@@ -13,7 +13,7 @@ const todayKey = () => {
   return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
 };
 
-/** This month as a grid of dots, today filled in. It leads to the booking page; it does not claim free slots. */
+/** This month as a small calendar, today filled in and past days dimmed. It leads to the booking page; it does not claim free slots. */
 export function MonthCard({ className }: { className?: string }) {
   const key = useSyncExternalStore(noSubscribe, todayKey, () => null);
   const [year, month, day] = key ? key.split("-").map(Number) : [2026, 0, 0];
@@ -34,6 +34,11 @@ export function MonthCard({ className }: { className?: string }) {
       </p>
 
       <div aria-hidden="true" className="mt-4 grid grid-cols-7 gap-1.5">
+        {t.heroV3.calendarWeekdays.map((d, i) => (
+          <span key={`wd-${i}`} className="pb-0.5 text-center text-[0.625rem] font-medium text-white/55">
+            {d}
+          </span>
+        ))}
         {Array.from({ length: lead }, (_, i) => (
           <span key={`lead-${i}`} />
         ))}
@@ -45,11 +50,11 @@ export function MonthCard({ className }: { className?: string }) {
               key={n}
               className={cn(
                 "grid aspect-square place-items-center rounded-full border text-[0.625rem] tabular-nums",
-                today ? "border-white bg-white font-semibold text-black" : "border-white/35 text-transparent",
+                today ? "border-white bg-white font-semibold text-black" : "border-white/25 text-white/85",
                 key && n < day && "opacity-35",
               )}
             >
-              {today ? n : ""}
+              {key ? n : ""}
             </span>
           );
         })}

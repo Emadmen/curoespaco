@@ -62,6 +62,8 @@ export const ptPT = {
     calendarTitle: "Marcar consulta",
     calendarLink: "Ver horários",
     calendarAction: "Marcar",
+    /** Monday first, as the calendar is laid out. */
+    calendarWeekdays: ["S", "T", "Q", "Q", "S", "S", "D"],
     services: "Serviços",
   },
   journey: {

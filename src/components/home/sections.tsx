@@ -19,7 +19,7 @@ import { ProfessionalCard } from "@/components/team/professional-card";
 
 export function Highlights() {
   return (
-    <Section aria-label="Destaques">
+    <Section aria-label="Destaques" space="md" fill={false}>
       <LabelledRows
         label={t.highlightsLabel}
         note={
@@ -28,7 +28,7 @@ export function Highlights() {
           </TextLink>
         }
       >
-        <RowList rows={t.highlights} headingAs="h2" />
+        <RowList rows={t.highlights} headingAs="h2" compact />
       </LabelledRows>
     </Section>
   );

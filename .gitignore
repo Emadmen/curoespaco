@@ -48,3 +48,6 @@ next-env.d.ts
 /test-results
 /playwright-report
 /playwright/.cache
+
+# raw source footage (web-ready copies live in public/videos)
+/*.mp4

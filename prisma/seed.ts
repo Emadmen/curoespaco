@@ -6,6 +6,8 @@
  *   npm run db:seed
  */
 import "dotenv/config";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import { defaultClinic, defaultProfessionals, defaultServices } from "../src/config/clinic";
 import { createPrismaClient } from "../src/lib/db";
 import { hashPassword } from "../src/lib/password";
@@ -20,6 +22,15 @@ const sampleWorkingHours = {
   "4": [{ start: "10:00", end: "13:00" }, { start: "14:00", end: "19:00" }],
   "5": [{ start: "09:00", end: "13:00" }],
 };
+
+/** Stores a photograph from /public as a MediaAsset, the same way an admin upload is kept. */
+async function storePortrait(imageUrl: string) {
+  const data = await readFile(path.join(process.cwd(), "public", imageUrl));
+  const ext = path.extname(imageUrl).toLowerCase();
+  const mimeType = ext === ".png" ? "image/png" : ext === ".webp" ? "image/webp" : "image/jpeg";
+  const asset = await prisma.mediaAsset.create({ data: { mimeType, size: data.length, data } });
+  return asset.id;
+}
 
 async function main() {
   const { openingHours, socials, ...clinic } = defaultClinic;
@@ -48,7 +59,14 @@ async function main() {
 
   for (const [index, p] of defaultProfessionals.entries()) {
     const existing = await prisma.professional.findUnique({ where: { slug: p.slug } });
-    if (existing) continue;
+    if (existing) {
+      // Give a default portrait to anyone still without one; never replace an admin upload.
+      if (!existing.imageId && p.imageUrl) {
+        await prisma.professional.update({ where: { id: existing.id }, data: { imageId: await storePortrait(p.imageUrl) } });
+        console.log(`Portrait added: ${p.name}`);
+      }
+      continue;
+    }
     await prisma.professional.create({
       data: {
         id: p.id,
@@ -60,6 +78,7 @@ async function main() {
         expertise: p.expertise,
         workingHours: sampleWorkingHours,
         sortOrder: index,
+        imageId: p.imageUrl ? await storePortrait(p.imageUrl) : null,
         services: { create: p.serviceIds.map((serviceId) => ({ serviceId })) },
       },
     });

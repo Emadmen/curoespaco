@@ -13,6 +13,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { LinkArrow, textLinkVariants } from "@/components/ui/text-link";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { isActive, navItems } from "@/components/layout/nav-items";
+import { TemplateSwitcher, useTemplate } from "@/components/layout/template-switcher";
 
 type Props = { name: string; whatsapp: string; phone: string };
 
@@ -21,8 +22,9 @@ export function SiteHeader({ name, whatsapp, phone }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const whatsappUrl = buildWhatsAppUrl(whatsapp, whatsappMessages.general());
-  // The home hero is a dark photograph, so the header starts out inverted.
-  const overPhoto = pathname === "/" && !scrolled;
+  const template = useTemplate();
+  // The home hero is a dark photograph, so the header starts out inverted. Templates 2 and 3 open on light paper.
+  const overPhoto = pathname === "/" && !scrolled && template === "1";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -62,6 +64,8 @@ export function SiteHeader({ name, whatsapp, phone }: Props) {
         </nav>
 
         <div className="flex items-center justify-end gap-2 lg:gap-3">
+          {/* TEMPORARY: lets the client compare UI templates. Remove once one is chosen. */}
+          <TemplateSwitcher />
           <a
             href={whatsappUrl}
             target="_blank"
@@ -71,7 +75,10 @@ export function SiteHeader({ name, whatsapp, phone }: Props) {
           >
             <WhatsAppIcon className="size-5" />
           </a>
-          <Link href="/marcar-consulta" className={buttonVariants({ size: "sm" })}>
+          <Link
+            href="/marcar-consulta"
+            className={cn(buttonVariants({ size: "sm" }), "template-2:bg-(--v2-cocoa) template-2:text-(--v2-cream) template-2:hover:bg-(--v2-cocoa)/85")}
+          >
             <span className="hidden min-[400px]:inline">{t.cta.book}</span>
             <span className="min-[400px]:hidden">{t.cta.bookShort}</span>
           </Link>

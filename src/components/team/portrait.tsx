@@ -40,7 +40,7 @@ export function Portrait({
           fill
           sizes={sizes}
           priority={priority}
-          className="object-cover"
+          className="object-cover object-[50%_15%]"
         />
       ) : (
         <>

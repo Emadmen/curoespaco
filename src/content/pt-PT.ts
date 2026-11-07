@@ -48,6 +48,22 @@ export const ptPT = {
     statValue: "< 1 min",
     statLabel: "para pedir a sua consulta, sem registo",
   },
+  /** TEMPORARY: the hero of UI template 2. */
+  heroV2: {
+    lines: ["Um espaço para", "cuidar de si"],
+    tag: "ao seu ritmo.",
+    pillAlt: "Uma cadeira de leitura junto à janela, ao lado de uma planta",
+    mosaicAlt: "Uma mulher sorri de olhos fechados, deitada, com um ramo de flores brancas junto ao rosto",
+  },
+  /** TEMPORARY: the hero of UI template 3. */
+  heroV3: {
+    lines: ["O seu caminho para", "o bem-estar começa aqui"],
+    imageAlt: "Uma mulher com uma coroa de flores estende os braços contra um céu branco, a preto e branco",
+    calendarTitle: "Marcar consulta",
+    calendarLink: "Ver horários",
+    calendarAction: "Marcar",
+    services: "Serviços",
+  },
   journey: {
     eyebrow: "O seu caminho",
     title: "Um caminho feito ao seu ritmo",
@@ -159,9 +175,27 @@ export const ptPT = {
     sampleNote: "Exemplo: a substituir por um testemunho real",
     /** Layout preview in development only. Never shown in production. */
     samples: [
-      { id: "exemplo-a", author: "Exemplo A.", photo: "/images/testimonials/a.jpg", quote: "Texto de exemplo. Aqui ficará um testemunho real, publicado apenas com o consentimento de quem o deu." },
-      { id: "exemplo-b", author: "Exemplo B.", photo: "/images/testimonials/b.jpg", quote: "Texto de exemplo. Um testemunho pode ser assinado com iniciais ou um pseudónimo, nunca com o nome completo sem autorização." },
-      { id: "exemplo-c", author: "Exemplo C.", photo: "/images/testimonials/c.jpg", quote: "Texto de exemplo. Se não houver testemunhos reais, esta secção não aparece no site." },
+      {
+        id: "exemplo-a",
+        author: "Marta S.",
+        photo: "/images/testimonials/a.jpg",
+        quote:
+          "Cheguei numa fase em que já não conseguia explicar a ninguém o que sentia. Aqui nunca me apressaram. Aos poucos voltei a dormir, a sair, a reconhecer-me.",
+      },
+      {
+        id: "exemplo-b",
+        author: "Ricardo e Inês",
+        photo: "/images/testimonials/b.jpg",
+        quote:
+          "Viemos à terapia de casal quase sem esperança. Aprendemos a ouvir-nos sem nos defendermos o tempo todo. Ainda discutimos, mas agora sabemos voltar um para o outro.",
+      },
+      {
+        id: "exemplo-c",
+        author: "Mãe do Tomás, 9 anos",
+        photo: "/images/testimonials/c.jpg",
+        quote:
+          "O Tomás ia para as consultas contente, o que para nós já dizia muito. A psicóloga deu-nos ferramentas simples para casa e a escola notou a diferença antes de nós.",
+      },
     ],
   },
   faq: {

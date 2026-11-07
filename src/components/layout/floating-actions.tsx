@@ -44,7 +44,11 @@ export function FloatingActions({ whatsapp }: { whatsapp: string }) {
           data-mobile-booking-bar
         >
           <div className="mx-auto flex max-w-md gap-2.5">
-            <Link href="/marcar-consulta" className={cn(buttonVariants({ size: "lg" }), "flex-1")}>
+            <Link href="/marcar-consulta" className={cn(
+                buttonVariants({ size: "lg" }),
+                "min-w-0 flex-1 shrink px-3 max-[359px]:text-sm",
+                "template-2:bg-(--v2-cocoa) template-2:text-(--v2-cream) template-2:hover:bg-(--v2-cocoa)/85",
+              )}>
               {t.cta.book}
             </Link>
             <a
@@ -52,7 +56,7 @@ export function FloatingActions({ whatsapp }: { whatsapp: string }) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={t.cta.whatsappAria}
-              className={cn(buttonVariants({ variant: "outline", size: "lg" }), "flex-1")}
+              className={cn(buttonVariants({ variant: "outline", size: "lg" }), "min-w-0 flex-1 shrink px-3 max-[359px]:text-sm")}
             >
               <WhatsAppIcon className="size-5" />
               {t.cta.whatsapp}

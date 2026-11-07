@@ -12,14 +12,25 @@ import { SplitTitle } from "@/components/shared/split-text";
 
 const steps = t.howItWorks.steps;
 
+/** One photograph per step, in step order. Swap these for the clinic's own when they exist. */
+const photos = [
+  { src: "/images/home/steps.jpg", position: "62% 50%" },
+  { src: "/images/home/about.jpg", position: "70% 40%" },
+  { src: "/images/home/hero.jpg", position: "50% 50%" },
+  { src: "/images/home/statement.jpg", position: "50% 60%" },
+];
+
 /**
  * The way to a first appointment, with a photograph over the rows. From `lg` it
  * holds on screen while the scroll picks the active row; on smaller screens the
- * rows simply pass, with the same scroll picking the active one.
+ * rows simply pass, with the same scroll picking the active one. Hovering a row
+ * makes it active too, and each row brings its own photograph.
  */
 export function Steps() {
   const ref = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
+  // The row the scroll has reached, so leaving a hovered row returns to it.
+  const scrolled = useRef(0);
 
   useGSAP(
     () => {
@@ -28,7 +39,12 @@ export function Steps() {
           trigger: ref.current,
           start: "top 10%",
           end: "bottom bottom",
-          onUpdate: ({ progress }) => setActive(Math.min(steps.length - 1, Math.floor(progress * steps.length))),
+          onUpdate: ({ progress }) => {
+            const step = Math.min(steps.length - 1, Math.floor(progress * steps.length));
+            if (step === scrolled.current) return;
+            scrolled.current = step;
+            setActive(step);
+          },
         });
       });
     },
@@ -55,21 +71,33 @@ export function Steps() {
               className="relative mb-3 aspect-[4/3] overflow-hidden sm:aspect-[16/9] rounded-xl lg:absolute lg:top-0 lg:right-[10.5%] lg:z-10 lg:mb-0 lg:aspect-[10/11] lg:h-[calc(75%-0.1875rem)]"
             >
               <Parallax from={-4} to={4} className="absolute inset-x-0 -inset-y-[5%]">
-                <Image
-                  src="/images/home/steps.jpg"
-                  alt={t.howItWorks.imageAlt}
-                  fill
-                  sizes="(min-width: 1024px) 34vw, 100vw"
-                  className="object-cover object-[62%_50%]"
-                />
+                {photos.map(({ src, position }, i) => (
+                  <Image
+                    key={src}
+                    src={src}
+                    alt={i === 0 ? t.howItWorks.imageAlt : ""}
+                    aria-hidden={i === 0 ? undefined : true}
+                    fill
+                    sizes="(min-width: 1024px) 34vw, 100vw"
+                    style={{ objectPosition: position }}
+                    className={cn(
+                      "object-cover transition-[opacity,scale] duration-700 ease-out motion-reduce:transition-none",
+                      i === active ? "scale-100 opacity-100" : "scale-[1.04] opacity-0",
+                    )}
+                  />
+                ))}
               </Parallax>
             </Reveal>
 
-            <ol className="grid gap-3 lg:h-[clamp(21rem,calc(100svh-16.5rem),36rem)] lg:auto-rows-fr">
+            <ol
+              onMouseLeave={() => setActive(scrolled.current)}
+              className="grid gap-3 lg:h-[clamp(21rem,calc(100svh-16.5rem),36rem)] lg:auto-rows-fr"
+            >
               {steps.map(({ title, text }, i) => (
                 <li
                   key={title}
                   aria-current={i === active ? "step" : undefined}
+                  onMouseEnter={() => setActive(i)}
                   className={cn(
                     "flex items-center rounded-lg border px-5 py-6 transition-colors duration-500 motion-reduce:transition-none lg:px-9 lg:pr-[46%]",
                     i === active ? "border-transparent bg-primary text-primary-foreground" : "border-foreground/6 bg-card",

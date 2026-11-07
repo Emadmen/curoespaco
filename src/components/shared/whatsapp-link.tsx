@@ -10,6 +10,8 @@ type Props = {
   number: string;
   message?: string;
   label?: string;
+  /** A shorter label for phones, where the full one would not fit beside another button. */
+  shortLabel?: string;
   className?: string;
   /** Hide the icon (e.g. when the label already makes it obvious). */
   hideIcon?: boolean;
@@ -24,6 +26,7 @@ export function WhatsAppLink({
   number,
   message,
   label = t.cta.whatsapp,
+  shortLabel,
   className,
   hideIcon,
   cta = false,
@@ -47,8 +50,15 @@ export function WhatsAppLink({
         className,
       )}
     >
-      {!hideIcon && <WhatsAppIcon className="size-[1.15em]" />}
-      <span>{label}</span>
+      {!hideIcon && <WhatsAppIcon className="size-[1.4em]" />}
+      {shortLabel ? (
+        <>
+          <span className="sm:hidden">{shortLabel}</span>
+          <span className="max-sm:hidden">{label}</span>
+        </>
+      ) : (
+        <span>{label}</span>
+      )}
     </a>
   );
 }

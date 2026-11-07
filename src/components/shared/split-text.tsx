@@ -11,6 +11,7 @@ export function SplitTitle({
   id,
   immediate = false,
   delay = 0,
+  mark = false,
 }: {
   as?: "h1" | "h2";
   children: string;
@@ -18,6 +19,8 @@ export function SplitTitle({
   id?: string;
   immediate?: boolean;
   delay?: number;
+  /** Sets each line on its own coral band, like text marked with a highlighter. */
+  mark?: boolean;
 }) {
   const ref = useRef<HTMLHeadingElement>(null);
 
@@ -49,7 +52,8 @@ export function SplitTitle({
 
   return (
     <Tag ref={ref} id={id} className={className} data-split="">
-      {children}
+      {/* An inline band breaks with the text, and cloning the decoration gives every line its own padded rectangle. */}
+      {mark ? <span className="bg-primary box-decoration-clone px-[0.2em]">{children}</span> : children}
     </Tag>
   );
 }

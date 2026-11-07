@@ -4,6 +4,110 @@
 @import "lenis/dist/lenis.css";
 
 @custom-variant dark (&:is(.dark *));
+/* TEMPORARY: styles for UI template 2 while the client compares templates (see src/lib/template.ts). */
+@custom-variant template-2 (&:where([data-template="2"] *));
+@custom-variant template-3 (&:where([data-template="3"] *));
+
+/*
+ * TEMPORARY: template 2's palette, taken from its hero photograph: honey and caramel from
+ * the skin, silver from the hair, cocoa from the dress, cream from its print, leaf from the stems.
+ */
+:root {
+  --v2-cream: #f4ecdf;
+  --v2-honey: #e9cfb2;
+  --v2-caramel: #d4a47c;
+  --v2-silver: #e2dccf;
+  --v2-cocoa: #4a2c1f;
+  --v2-leaf: #7c8c55;
+}
+
+/*
+ * TEMPORARY: template 3, "Monochrome". Taken from its black-and-white hero photograph: a
+ * high-key white sky, a silhouette in near-black, and the soft greys of skin and hair in
+ * between. No colour at all; contrast and a narrow display face carry the hierarchy.
+ * It re-points the raw scales and the semantic tokens, so every shared section follows.
+ */
+html[data-template="3"] {
+  --color-coral-400: #ececea;
+  --color-coral-500: #dcdcd9;
+  --color-coral-600: #c6c6c2;
+
+  --color-sage-100: #f1f1ef;
+  --color-sage-200: #e5e5e2;
+  --color-sage-300: #d8d8d4;
+
+  --color-sand-50: #f6f6f4;
+  --color-sand-100: #eeeeeb;
+  --color-sand-200: #e5e5e1;
+  --color-sand-300: #d3d3ce;
+
+  --color-forest-500: #4b4b48;
+  --color-forest-700: #1d1d1c;
+  --color-forest-800: #141414;
+  --color-forest-900: #0b0b0b;
+
+  --background: #ffffff;
+  --foreground: #141414;
+  --card: #ffffff;
+  --card-foreground: #141414;
+  --popover-foreground: #141414;
+  /* Ink is the main colour here: buttons are black with white text. */
+  --primary: #141414;
+  --primary-foreground: #ffffff;
+  --secondary: #e5e5e1;
+  --secondary-foreground: #141414;
+  --muted: #eeeeeb;
+  --muted-foreground: #4b4b48;
+  --accent: #e5e5e1;
+  --accent-foreground: #141414;
+  --border: rgb(20 20 20 / 0.14);
+  --input: rgb(20 20 20 / 0.42);
+  --ring: #141414;
+  --radius: 1.25rem;
+  --v3-display: var(--font-condensed), var(--font-inter-tight), ui-sans-serif, sans-serif;
+}
+
+/* On dark bands the main colour turns white, with ink on it. */
+[data-template="3"] .tone-forest {
+  --primary: #ffffff;
+  --primary-foreground: #141414;
+  --muted-foreground: #c9c9c5;
+}
+
+/* The display face: narrow, regular weight, a touch of air between letters. */
+[data-template="3"] :is(h1, h2, h3, .type-display-xl, .type-display-lg, .type-display-md) {
+  font-family: var(--v3-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+[data-template="3"] :is(.type-display-xl, .type-display-lg) {
+  font-size: clamp(2.5rem, 1.2rem + 3vw, 4.5rem);
+  line-height: 1;
+}
+
+/* Every photograph in black and white, to match the hero. */
+[data-template="3"] main :is(img, video) {
+  filter: grayscale(1);
+}
+
+[data-template="3"] ::selection {
+  background: #141414;
+  color: #ffffff;
+}
+
+/* Grey light instead of coral on the small shapes and the closing band. */
+[data-template="3"] .ember {
+  background:
+    radial-gradient(60% 110% at 30% 20%, #ffffff 0%, transparent 70%),
+    radial-gradient(90% 120% at 80% 95%, #c6c6c2 0%, transparent 65%),
+    linear-gradient(135deg, #ececea, #cfcfcb);
+}
+[data-template="3"] .glow {
+  background:
+    radial-gradient(38% 110% at 70% -5%, rgb(255 255 255 / 0.32) 0%, transparent 72%),
+    radial-gradient(26% 80% at 42% 108%, rgb(255 255 255 / 0.14) 0%, transparent 72%),
+    linear-gradient(115deg, #0b0b0b 0%, #232322 48%, #0b0b0b 100%);
+}
 
 /*
  * Cora design system. See docs/design-system.md.
@@ -293,18 +397,22 @@
 
 /*
  * Hero only: the photograph itself dissolves into the paper over its last
- * ~26rem, on eased stops, so there is no dark layer and no visible edge.
+ * ~22rem, on eased stops, so there is no dark layer and no visible edge. The
+ * fade lives almost entirely in the spacer below the fold, so the first screen
+ * stays clear photograph.
  */
 @utility hero-photo-fade {
   mask-image: linear-gradient(
     to bottom,
-    black calc(100% - 26rem),
-    rgb(0 0 0 / 0.93) calc(100% - 22rem),
-    rgb(0 0 0 / 0.78) calc(100% - 18rem),
-    rgb(0 0 0 / 0.56) calc(100% - 14rem),
-    rgb(0 0 0 / 0.32) calc(100% - 10rem),
-    rgb(0 0 0 / 0.12) calc(100% - 6rem),
-    transparent calc(100% - 2.5rem)
+    black calc(100% - 22rem),
+    rgb(0 0 0 / 0.95) calc(100% - 19rem),
+    rgb(0 0 0 / 0.84) calc(100% - 16.5rem),
+    rgb(0 0 0 / 0.68) calc(100% - 14rem),
+    rgb(0 0 0 / 0.5) calc(100% - 11rem),
+    rgb(0 0 0 / 0.32) calc(100% - 8.5rem),
+    rgb(0 0 0 / 0.17) calc(100% - 6rem),
+    rgb(0 0 0 / 0.06) calc(100% - 3rem),
+    transparent 100%
   );
 }
 

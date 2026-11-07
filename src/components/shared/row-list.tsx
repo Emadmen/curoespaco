@@ -9,12 +9,15 @@ export function RowList({
   rows,
   numbered = false,
   stacked = false,
+  compact = false,
   headingAs: Heading = "h3",
   className,
 }: {
   rows: readonly Row[];
   numbered?: boolean;
   stacked?: boolean;
+  /** Tighter rows, for a short list that should not fill the screen. */
+  compact?: boolean;
   headingAs?: "h2" | "h3";
   className?: string;
 }) {
@@ -23,7 +26,7 @@ export function RowList({
       {rows.map((row, i) => (
         <li key={row.title} className="relative">
           <span data-reveal-line="" aria-hidden="true" className="absolute inset-x-0 top-0 h-px origin-left bg-border" />
-          <div data-reveal-item="" className={cn("grid gap-3 py-8 sm:py-10", !stacked && "sm:grid-cols-2 sm:gap-12")}>
+          <div data-reveal-item="" className={cn("grid gap-3", compact ? "py-5 sm:py-6" : "py-8 sm:py-10", !stacked && "sm:grid-cols-2 sm:gap-12")}>
             <Heading className="type-display-sm">
               {numbered && (
                 <span className="mr-4 tabular-nums" aria-hidden="true">

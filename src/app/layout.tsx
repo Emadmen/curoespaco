@@ -1,13 +1,22 @@
 import type { Metadata, Viewport } from "next";
-import { Inter_Tight } from "next/font/google";
+import { Barlow_Condensed, Inter_Tight } from "next/font/google";
 import { siteConfig } from "@/config/clinic";
 import { getClinic } from "@/lib/data";
+import { DEFAULT_TEMPLATE, templateScript } from "@/lib/template";
 import "./globals.css";
 
 const sans = Inter_Tight({
   variable: "--font-inter-tight",
   subsets: ["latin", "latin-ext"],
   style: ["normal", "italic"],
+  display: "swap",
+});
+
+/** TEMPORARY: template 3's display face, a narrow grotesque for its headings. */
+const condensed = Barlow_Condensed({
+  variable: "--font-condensed",
+  subsets: ["latin", "latin-ext"],
+  weight: ["300", "400", "500"],
   display: "swap",
 });
 
@@ -36,7 +45,11 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="pt-PT" className={`${sans.variable} h-full`}>
+    <html lang="pt-PT" className={`${sans.variable} ${condensed.variable} h-full`} data-template={DEFAULT_TEMPLATE} suppressHydrationWarning>
+      <head>
+        {/* TEMPORARY: applies the chosen UI template before the page paints. */}
+        <script dangerouslySetInnerHTML={{ __html: templateScript }} />
+      </head>
       <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );

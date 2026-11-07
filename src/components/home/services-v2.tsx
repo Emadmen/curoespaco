@@ -75,7 +75,7 @@ export function ServicesV2({ services, palette = "v2" }: { services: PublicServi
       onPointerLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
-      className={cn("py-20 text-(--v2-cocoa) lg:py-28", palette === "site" ? "bg-background" : "bg-white")}
+      className="bg-background py-20 text-(--v2-cocoa) lg:py-28"
     >
       <div className="container-page">
         <Reveal className="flex flex-wrap items-end justify-between gap-x-10 gap-y-4">

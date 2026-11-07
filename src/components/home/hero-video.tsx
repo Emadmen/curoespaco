@@ -9,12 +9,15 @@ import { useEffect, useRef } from "react";
 export function HeroVideo({
   src,
   mobileSrc,
+  portraitSrc,
   poster,
   className,
 }: {
   src: string;
   /** A lighter cut for phones, where the full-resolution file would cost too much data. */
   mobileSrc?: string;
+  /** A vertical cut for phones, where the video fills a tall, narrow screen; cropping the landscape file there blows it up. */
+  portraitSrc?: string;
   poster: string;
   className?: string;
 }) {
@@ -46,6 +49,7 @@ export function HeroVideo({
       preload="auto"
       disablePictureInPicture
     >
+      {portraitSrc && <source src={portraitSrc} type="video/mp4" media="(max-width: 639px)" />}
       {mobileSrc && <source src={mobileSrc} type="video/mp4" media="(max-width: 767px)" />}
       <source src={src} type="video/mp4" />
     </video>

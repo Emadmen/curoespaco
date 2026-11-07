@@ -24,6 +24,7 @@ export function Hero({ clinic }: { clinic: ClinicInfo }) {
           <HeroVideo
             src="/videos/hero.mp4"
             mobileSrc="/videos/hero-720.mp4"
+            portraitSrc="/videos/hero-portrait.mp4"
             poster="/videos/hero-poster.jpg"
             className="absolute inset-0 size-full object-cover object-center"
           />
@@ -48,7 +49,7 @@ export function Hero({ clinic }: { clinic: ClinicInfo }) {
                   {t.hero.eyebrow}
                 </span>
               </Reveal>
-              <SplitTitle as="h1" id="hero-title" immediate delay={0.3} className="mt-6 max-w-[12em] type-display-xl leading-[1.18] font-light text-forest-900 [text-wrap:pretty] max-sm:text-white max-sm:**:bg-transparent max-sm:**:px-0" mark>
+              <SplitTitle as="h1" id="hero-title" immediate delay={0.3} className="mt-6 max-w-[12em] type-display-xl leading-[1.18] font-light text-forest-900 [text-wrap:pretty]" mark>
                 {clinic.heroTitle}
               </SplitTitle>
               <Reveal immediate delay={0.9} className="mt-8 flex items-center gap-3 max-[359px]:flex-col max-[359px]:items-stretch">

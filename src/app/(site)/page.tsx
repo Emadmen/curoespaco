@@ -4,7 +4,6 @@ import { Hero } from "@/components/home/hero";
 import { HeroV2 } from "@/components/home/hero-v2";
 import { HeroV3 } from "@/components/home/hero-v3";
 import { Journey } from "@/components/home/journey";
-import { ServicesSection } from "@/components/home/services";
 import { ServicesV2 } from "@/components/home/services-v2";
 import { Steps } from "@/components/home/steps";
 import { TeamShowcase } from "@/components/home/team-showcase";
@@ -34,7 +33,7 @@ export default async function HomePage() {
       </div>
       <Journey statement={clinic.heroSubtitle} />
       <div className="template-2:hidden">
-        <ServicesSection services={services} />
+        <ServicesV2 services={services} palette="site" />
       </div>
       <div className="hidden template-2:block">
         <ServicesV2 services={services} />

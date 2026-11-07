@@ -44,7 +44,12 @@ export function TemplateSwitcher({ className }: { className?: string }) {
     <Menu.Root>
       <Menu.Trigger
         aria-label={`Versão do site: ${label}`}
-        className={cn(buttonVariants({ variant: "outline", size: "sm" }), "gap-1 px-3", className)}
+        // A solid light chip, so it stays readable over the hero video as well as on the paper.
+        className={cn(
+          buttonVariants({ variant: "outline", size: "sm" }),
+          "gap-1 border-forest-900/15 bg-white/90 px-3 font-semibold text-forest-900 shadow-sm backdrop-blur-md hover:bg-white hover:text-forest-900",
+          className,
+        )}
       >
         <span className="max-sm:hidden">Versão</span>
         <span className="sm:hidden">V{current}</span>

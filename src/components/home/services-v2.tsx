@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { t } from "@/content";
 import { cn } from "@/lib/utils";
@@ -10,7 +10,7 @@ import type { PublicService } from "@/types";
 import { Reveal } from "@/components/shared/reveal";
 
 /*
- * TEMPORARY: the services section for UI template 2. A ruled list on the left; pointing at a
+ * The home page's services section (first built for UI template 2; template 1 now uses it too). A ruled list on the left; pointing at a
  * service brings up its photograph in the middle and its name, set large, on the right. With
  * no pointer it moves on by itself, and the dots on the far edge show where it is.
  */
@@ -22,6 +22,18 @@ const PHOTOS = [
   { src: "/images/home/steps.jpg", position: "45% 50%", alt: t.heroV2.pillAlt },
   { src: "/images/home/hero.jpg", position: "50% 50%", alt: t.hero.imageAlt },
 ] as const;
+
+/**
+ * Template 1 (and 3, which re-colours template 1's tokens) uses this section too, in the site's
+ * own colours: the template-2 palette variables are pointed at the shared design tokens.
+ */
+const SITE_PALETTE = {
+  "--v2-cocoa": "var(--color-forest-700)",
+  "--v2-silver": "var(--color-sage-200)",
+  "--v2-honey": "var(--color-sand-200)",
+  "--v2-caramel": "var(--color-coral-600)",
+  "--v2-leaf": "var(--color-coral-600)",
+} as CSSProperties;
 
 const SHOWN = 5;
 const INTERVAL = 5000;
@@ -38,7 +50,8 @@ function Dots({ className }: { className?: string }) {
   );
 }
 
-export function ServicesV2({ services }: { services: PublicService[] }) {
+export function ServicesV2({ services, palette = "v2" }: { services: PublicService[]; palette?: "v2" | "site" }) {
+  const titleId = palette === "site" ? "services-title" : "services-v2-title";
   const items = services.slice(0, SHOWN);
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -56,16 +69,17 @@ export function ServicesV2({ services }: { services: PublicService[] }) {
 
   return (
     <section
-      aria-labelledby="services-v2-title"
+      aria-labelledby={titleId}
+      style={palette === "site" ? SITE_PALETTE : undefined}
       onPointerEnter={() => setPaused(true)}
       onPointerLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
-      className="bg-white py-20 text-(--v2-cocoa) lg:py-28"
+      className={cn("py-20 text-(--v2-cocoa) lg:py-28", palette === "site" ? "bg-background" : "bg-white")}
     >
       <div className="container-page">
         <Reveal className="flex flex-wrap items-end justify-between gap-x-10 gap-y-4">
-          <h2 id="services-v2-title" className="max-w-[16em] text-balance text-[clamp(1.75rem,1.4rem+1vw,2.25rem)] leading-[1.15] font-light tracking-[-0.02em]">
+          <h2 id={titleId} className="max-w-[16em] text-balance text-[clamp(1.75rem,1.4rem+1vw,2.25rem)] leading-[1.15] font-light tracking-[-0.02em]">
             <strong className="font-semibold">{t.services.helpEyebrow}</strong> – {t.services.title}
           </h2>
           <Link href="/servicos" className="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline">

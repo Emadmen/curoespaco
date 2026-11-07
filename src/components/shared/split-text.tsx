@@ -31,7 +31,10 @@ export function SplitTitle({
         SplitText.create(el, {
           type: "lines",
           mask: "lines",
-          linesClass: "split-line",
+          // Marked lines are padded once split, so they come out a little wider than the text was
+          // measured; nowrap keeps each measured line whole (no word dropping onto a band of its
+          // own) and drops any space left at a line's start.
+          linesClass: mark ? "split-line whitespace-nowrap" : "split-line",
           autoSplit: true,
           onSplit: (self) => {
             gsap.set(el, { opacity: 1 });

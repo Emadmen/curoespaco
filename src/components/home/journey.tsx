@@ -6,6 +6,7 @@ import { EASE, gsap, MOTION_OK, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { Reveal } from "@/components/shared/reveal";
 import { ScrubText } from "@/components/shared/split-text";
 import { NeuralField } from "./neural-field";
+import { JourneyLeaves } from "./journey-leaves";
 
 const steps = t.journey.steps;
 const hidden = (edge: number) => `circle(0% at ${edge}% 50%)`;
@@ -79,6 +80,18 @@ export function Journey({ statement }: { statement: string }) {
         const row = { trigger: q("[data-journey-row]")[0], start: "top 85%", once: true };
         gsap.from(q("[data-journey-circle]"), { opacity: 0, scale: 0.92, duration: 1.4, ease: EASE, stagger: 0.15, scrollTrigger: row });
         gsap.set(fills[0], { clipPath: filled(0) });
+        // The leaves sway on their stems, each at its own pace, as if in a light breeze.
+        q("[data-journey-leaf]").forEach((leaf) => {
+          gsap.to(leaf, {
+            rotation: gsap.utils.random(6, 12) * (Math.random() < 0.5 ? -1 : 1),
+            y: gsap.utils.random(-6, 6),
+            duration: gsap.utils.random(3, 5.5),
+            delay: gsap.utils.random(0, 2),
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true,
+          });
+        });
         gsap.to(q("[data-journey-texture]"), { rotation: 90, ease: "none", scrollTrigger: { ...scroll, scrub: 1 } });
         // The branches grow from their stems through the last stage.
         const plants = q("[data-journey-plant]");
@@ -114,6 +127,7 @@ export function Journey({ statement }: { statement: string }) {
         >
           <div className="size-full bg-coral-600 opacity-80 mask-[url(/images/home/branches-seam.svg)] mask-size-[100%_auto] mask-top mask-no-repeat" />
         </div>
+        <JourneyLeaves />
         <div className="container-page relative text-center">
           <Reveal className="flex justify-center">
             <p className="eyebrow">{t.journey.eyebrow}</p>

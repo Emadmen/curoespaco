@@ -117,7 +117,8 @@ export function Journey({ statement }: { statement: string }) {
 
   return (
     <section ref={ref} aria-label={t.journey.eyebrow} data-journey-track="" className="relative overflow-x-clip">
-      <div className="sticky top-0 flex min-h-svh flex-col justify-center pt-24 pb-28 lg:pb-8">
+      {/* On phones the content is shorter than the screen, so it starts under the header instead of centring. */}
+      <div className="sticky top-0 flex min-h-svh flex-col justify-center pt-24 pb-28 max-sm:justify-start lg:pb-8">
         {/* Fine branches reach in from the left and right edges and thin to twigs as they near the
             middle, fading out before the text. It lives in the pinned block, so it holds still
             while the steps play. The SVG is a mask, so its colour is ours. */}

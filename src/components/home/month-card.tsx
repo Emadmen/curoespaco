@@ -13,8 +13,31 @@ const todayKey = () => {
   return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
 };
 
+/** The two looks: frosted dark over a photograph, or a lighter tinted glass that holds its own on the paper. */
+const TONES = {
+  glass: {
+    card: "border-white/15 bg-forest-900/70 text-white backdrop-blur-xl",
+    soft: "text-white/70",
+    weekday: "text-white/55",
+    day: "border-white/25 text-white/85",
+    today: "border-white bg-white text-black",
+    rule: "border-white/20",
+    action: "bg-white text-black hover:bg-white/85",
+  },
+  frost: {
+    card: "border-white/40 bg-forest-900/55 text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.35)] backdrop-blur-xl",
+    soft: "text-white/75",
+    weekday: "text-white/60",
+    day: "border-white/30 bg-white/5 text-white/90",
+    today: "border-white bg-white text-black",
+    rule: "border-white/25",
+    action: "bg-white text-black hover:bg-white/85",
+  },
+};
+
 /** This month as a small calendar, today filled in and past days dimmed. It leads to the booking page; it does not claim free slots. */
-export function MonthCard({ className }: { className?: string }) {
+export function MonthCard({ className, tone = "glass" }: { className?: string; tone?: keyof typeof TONES }) {
+  const look = TONES[tone];
   const key = useSyncExternalStore(noSubscribe, todayKey, () => null);
   const [year, month, day] = key ? key.split("-").map(Number) : [2026, 0, 0];
   const lead = (new Date(year, month, 1).getDay() + 6) % 7; // Monday first
@@ -22,20 +45,20 @@ export function MonthCard({ className }: { className?: string }) {
   const date = key ? `${String(day).padStart(2, "0")}.${String(month + 1).padStart(2, "0")}.${year}` : "";
 
   return (
-    <div className={cn("w-[19rem] max-w-full rounded-[1.5rem] border border-white/15 bg-forest-900/70 p-5 text-white backdrop-blur-xl", className)}>
-      <div className="flex items-baseline justify-between gap-4">
+    <div className={cn("w-[19rem] max-w-full rounded-[1.5rem] border p-5", look.card, className)}>
+      <div className="relative flex items-baseline justify-between gap-4">
         <p className="text-2xl font-light tracking-[-0.02em] template-3:font-(family-name:--v3-display) template-3:font-normal template-3:tracking-normal leading-none">{t.heroV3.calendarTitle}</p>
         <Link href="/marcar-consulta" className="text-xs underline underline-offset-4 hover:no-underline">
           {t.heroV3.calendarLink}
         </Link>
       </div>
-      <p className="mt-1.5 text-xs text-white/70">
+      <p className={cn("relative mt-1.5 text-xs", look.soft)}>
         {t.hero.statValue} {t.hero.statLabel}
       </p>
 
-      <div aria-hidden="true" className="mt-4 grid grid-cols-7 gap-1.5">
+      <div aria-hidden="true" className="relative mt-4 grid grid-cols-7 gap-1.5">
         {t.heroV3.calendarWeekdays.map((d, i) => (
-          <span key={`wd-${i}`} className="pb-0.5 text-center text-[0.625rem] font-medium text-white/55">
+          <span key={`wd-${i}`} className={cn("pb-0.5 text-center text-[0.625rem] font-medium", look.weekday)}>
             {d}
           </span>
         ))}
@@ -50,7 +73,7 @@ export function MonthCard({ className }: { className?: string }) {
               key={n}
               className={cn(
                 "grid aspect-square place-items-center rounded-full border text-[0.625rem] tabular-nums",
-                today ? "border-white bg-white font-semibold text-black" : "border-white/25 text-white/85",
+                today ? cn("font-semibold", look.today) : look.day,
                 key && n < day && "opacity-35",
               )}
             >
@@ -60,11 +83,11 @@ export function MonthCard({ className }: { className?: string }) {
         })}
       </div>
 
-      <div className="mt-4 flex items-center justify-between gap-4 border-t border-white/20 pt-4">
+      <div className={cn("relative mt-4 flex items-center justify-between gap-4 border-t pt-4", look.rule)}>
         <span className="text-2xl font-light tracking-[-0.02em] template-3:font-(family-name:--v3-display) template-3:font-normal template-3:tracking-normal leading-none tabular-nums">{date}</span>
         <Link
           href={bookingHref()}
-          className="inline-flex h-9 items-center rounded-full bg-white px-4 text-xs font-semibold text-black transition-colors hover:bg-white/85"
+          className={cn("inline-flex h-9 items-center rounded-full px-4 text-xs font-semibold transition-colors", look.action)}
         >
           {t.heroV3.calendarAction}
         </Link>
